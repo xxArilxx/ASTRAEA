@@ -17,3 +17,4 @@ DETAILS:
    2. thursday, january 8th, 2025: sorting and adding files into their respective folders for easier navigation fo resources
 
 STORY: 
+- TBW
