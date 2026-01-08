@@ -1,5 +1,4 @@
-#ASTRAEA
-Welcome to ASTRAEA, a visual novel fully developped by yours truly, Ari, for the ICS3UR-01 summative! 
+Welcome to ASTRAEA, a visual novel fully developped by Ari for the ICS3UR-01 (Introduction to Computer Science) summative! 
 
 INSTRUCTIONS: 
 - tap on the arrow or press the spacebar to show all text and skip to the next text
@@ -14,6 +13,6 @@ DETAILS:
 - visuals! all hand drawn during the december holiday break
 - Code timeline: 
    1. wednesday, january 7th, 2025: creating display, character, mc, sidesuppchar, options, and musicplayer classes with code in the character class
+   2. thursday, january 8th, 2025: sorting and adding files into their respective folders for easier navigation fo resources
 
 STORY: 
-You play as a young girl named Atlas. 

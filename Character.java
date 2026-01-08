@@ -1,6 +1,5 @@
 import javax.swing.*;
 
-
 class Character {
    //BOOLS
    boolean isMainCharacter;
@@ -21,9 +20,6 @@ class Character {
    String[] ATLSpriteList = {"Neutral", "Smile", "Sad", "Angry", "Thinking"};
    String[] SOLSpriteList = {"Neutral", "Awaken", "Excited", "Sad", "Angry", "Thinking"};
    String[] SUPSpriteList = {"Neutral", "Smirk", "Surprised", "Furious"};
-
-
-   ImageIcon name = new ImageIcon(tempResPath);
 
 
    public Character(boolean isMC, String nOC, String nOS){
@@ -59,9 +55,6 @@ class Character {
                tempResPath = "CHAR/SideSuppChar/" + nameOfCharacter + ".png";
            }
        }
-      
-      
-      
    }
   
    public int searchList(String[] list, String name){
