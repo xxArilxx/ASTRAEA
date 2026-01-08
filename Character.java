@@ -1,5 +1,3 @@
-import javax.swing.*;
-
 class Character {
    //BOOLS
    boolean isMainCharacter;
@@ -8,7 +6,8 @@ class Character {
    //STRINGS
    String nameOfCharacter;
    String nameOfSprite;
-   String tempResPath;
+   String tempImgPath;
+   String tempVoicePath; 
 
 
    //CHAR LISTS
@@ -34,17 +33,17 @@ class Character {
                if (nameOfSprite.equalsIgnoreCase("Atlas")){
                    spriteIndex = searchList(ATLSpriteList, nOS);
                    if (spriteIndex != -1){
-                       tempResPath = "CHAR/MC/" + nameOfCharacter + "/" + nameOfSprite + ".png";
+                       tempImgPath = "CHAR/" + nameOfCharacter + "/" + nameOfSprite + ".png";
                    }
                } else if (nameOfSprite.equalsIgnoreCase("Sol")) {
                    spriteIndex = searchList(SOLSpriteList, nOS);
                    if (spriteIndex != -1){
-                       tempResPath = "CHAR/MC/" + nameOfCharacter + "/" + nameOfSprite + ".png";
+                       tempImgPath = "CHAR/" + nameOfCharacter + "/" + nameOfSprite + ".png";
                    }
                } else {
                    spriteIndex = searchList(SUPSpriteList, nOS);
                    if (spriteIndex != -1){
-                       tempResPath = "CHAR/MC/" + nameOfCharacter + "/" + nameOfSprite + ".png";
+                       tempImgPath = "CHAR/" + nameOfCharacter + "/" + nameOfSprite + ".png";
                    }
                }
            }
@@ -52,7 +51,7 @@ class Character {
        } else {
           charIndex = searchList(sideSuppCharList, nOC);
            if (charIndex != -1){
-               tempResPath = "CHAR/SideSuppChar/" + nameOfCharacter + ".png";
+               tempVoicePath = "VOICE/Side/" + nameOfCharacter + ".wav";
            }
        }
    }
