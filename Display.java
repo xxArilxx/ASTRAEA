@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class Display extends Character {
     //JFRAME
-    JFrame GameScreen; 
+    static JFrame GameScreen; 
 
     //JBUTTONS
     JButton start; 
@@ -13,7 +13,6 @@ public class Display extends Character {
     JButton Option3; 
 
     //ARRAYS
-    String[] questions = {}; 
     String[] option1 = {}; 
     String[] option2 = {}; 
     String[] option3 = {}; 
