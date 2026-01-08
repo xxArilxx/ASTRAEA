@@ -6,7 +6,6 @@ class Character {
    boolean isMainCharacter;
    boolean isInAstraea;
 
-
    //STRINGS
    String nameOfCharacter;
    String nameOfSprite;
@@ -39,23 +38,26 @@ class Character {
                if (nameOfSprite.equalsIgnoreCase("Atlas")){
                    spriteIndex = searchList(ATLSpriteList, nOS);
                    if (spriteIndex != -1){
-                       tempResPath = "Character Images/MC/" + nameOfCharacter + "/" + nameOfSprite + ".png";
+                       tempResPath = "CHAR/MC/" + nameOfCharacter + "/" + nameOfSprite + ".png";
                    }
                } else if (nameOfSprite.equalsIgnoreCase("Sol")) {
                    spriteIndex = searchList(SOLSpriteList, nOS);
                    if (spriteIndex != -1){
-                       tempResPath = "Character Images/MC/" + nameOfCharacter + "/" + nameOfSprite + ".png";
+                       tempResPath = "CHAR/MC/" + nameOfCharacter + "/" + nameOfSprite + ".png";
                    }
                } else {
                    spriteIndex = searchList(SUPSpriteList, nOS);
                    if (spriteIndex != -1){
-                       tempResPath = "Character Images/MC/" + nameOfCharacter + "/" + nameOfSprite + ".png";
+                       tempResPath = "CHAR/MC/" + nameOfCharacter + "/" + nameOfSprite + ".png";
                    }
                }
            }
           
        } else {
-          
+          charIndex = searchList(sideSuppCharList, nOC);
+           if (charIndex != -1){
+               tempResPath = "CHAR/SideSuppChar/" + nameOfCharacter + ".png";
+           }
        }
       
       
