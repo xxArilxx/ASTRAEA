@@ -18,4 +18,12 @@ DETAILS:
    2. thursday, january 8th, 2025: sorting and adding files into their respective folders for easier navigation fo resources
 
 STORY: 
-- TBW
+Welcome, wayward story searcher! 
+You're just in time for today's story; Astraea by Dusk Dawning! Filled with whimsicality, friendship, and love, this sappy story is accompanied by domestic rejection, tyranny, manipulation and more. 
+
+Don't be fooled by the book's appearance! Upon opening, the storyteller becomes the narrator as you play as Atlas, its main character. Because of of your entry into their world, your choices made throughout the story will affect the ending you see so choose wisely! You don't want to end up dead before you reach the end! 
+
+FUTURE UPDATES: 
+- this story currently contains two different endings on one singular path -> more paths and endings to the story will be added
+- pause / save buttons in case you need to go afk
+- 
