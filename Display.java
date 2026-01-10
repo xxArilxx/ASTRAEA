@@ -7,7 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 //Font setup imports
 import java.io.IOException;
-import java.awt.Color; 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 //getContentPane() of JFrame
@@ -36,6 +37,7 @@ public class Display implements ActionListener{
 
     //IMAGEICONS
     static ImageIcon gameLogo = new ImageIcon("VIS/DECOR/Astraea.png");
+    static ImageIcon homescreenBG = new ImageIcon("VIS/DECOR/750Background.png");
 
     //BOUNCING ANIMATION VARIABLES
     static boolean animating = true;
@@ -46,10 +48,19 @@ public class Display implements ActionListener{
         //Creating JFrame
         GameScreen = new JFrame(); 
         GameScreen.setSize(750, 750);
+        GameScreen.setResizable(false); 
+        GameScreen.setMaximumSize(new Dimension(750, 750));
         GameScreen.setLayout(null); 
         GameScreen.setDefaultCloseOperation(GameScreen.EXIT_ON_CLOSE);
-        GameScreen.getContentPane().setBackground(Color.BLACK);
+        //GameScreen.getContentPane().setBackground(Color.decode("#9fb5d1"));
+        //save start and exit button words into this color: "#92bbdaff"
         GameScreen.setLocationRelativeTo(null); 
+
+        JLabel HSBG = new JLabel();
+        HSBG.setBounds(0, 0, 750, 750);
+        HSBG.setIcon(homescreenBG);
+        GameScreen.add(HSBG); 
+        GameScreen.setContentPane(HSBG); 
 
         //Creating JLabel for logo in the very beginning of the game
         astraeaLogo = new JLabel();
@@ -57,14 +68,14 @@ public class Display implements ActionListener{
         astraeaLogo.setIcon(gameLogo);
 
         //Creating JButton to start the game
-        start = new JButton("Start"); 
+        start = new JButton("<html><b> Start </b></html>"); 
         start.setBounds(0, 0, 275, 50); 
         start.setFocusPainted(false); 
         start.setOpaque(false);
         start.setVisible(true);
 
         //Creating JButton to exit the game
-        exit = new JButton("Exit"); 
+        exit = new JButton("<html><b> Exit </b></html>"); 
         exit.setBounds(0, 0, 275, 50); 
         exit.setFocusPainted(false);
         exit.setOpaque(false); 
@@ -89,6 +100,7 @@ public class Display implements ActionListener{
 
         //Dimensions of the content pane of the JFrame
         GameScreen.setVisible(true);
+
         int screenHeight = (int)GameScreen.getContentPane().getHeight();
         int screenWidth = (int)GameScreen.getContentPane().getWidth();
 
