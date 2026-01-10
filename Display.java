@@ -18,41 +18,57 @@ public class Display implements ActionListener{
     static JFrame GameScreen; 
 
     //JBUTTONS
-    JButton start; 
-    JButton next; 
-    JButton dialogueHistory; 
-    JButton Option1; 
-    JButton Option2; 
-    JButton Option3; 
+    static JButton start; 
+    static JButton next; 
+    static JButton exit; 
+    static JButton dialogueHistory; 
+    static JButton Option1; 
+    static JButton Option2; 
+    static JButton Option3; 
 
     //JLABELS
     static JLabel astraeaLogo; 
 
     //ARRAYS
-    String[] option1 = {}; 
-    String[] option2 = {}; 
-    String[] option3 = {}; 
+    static String[] option1 = {}; 
+    static String[] option2 = {}; 
+    static String[] option3 = {}; 
 
     //IMAGEICONS
     static ImageIcon gameLogo = new ImageIcon("VIS/DECOR/Astraea.png");
 
     //BOUNCING ANIMATION VARIABLES
-    boolean animating = true;
-    Timer animationTimer; 
+    static boolean animating = true;
+    static Timer animationTimer; 
 
 
     public static void main(String[] args){
         //Creating JFrame
         GameScreen = new JFrame(); 
-        GameScreen.setBounds(0, 0, 750,750);
+        GameScreen.setSize(750, 750);
         GameScreen.setLayout(null); 
         GameScreen.setDefaultCloseOperation(GameScreen.EXIT_ON_CLOSE);
         GameScreen.getContentPane().setBackground(Color.BLACK);
+        GameScreen.setLocationRelativeTo(null); 
 
         //Creating JLabel for logo in the very beginning of the game
         astraeaLogo = new JLabel();
         astraeaLogo.setBounds(0, 0, 500, 500);
         astraeaLogo.setIcon(gameLogo);
+
+        //Creating JButton to start the game
+        start = new JButton("Start"); 
+        start.setBounds(0, 0, 275, 50); 
+        start.setFocusPainted(false); 
+        start.setOpaque(false);
+        start.setVisible(true);
+
+        //Creating JButton to exit the game
+        exit = new JButton("Exit"); 
+        exit.setBounds(0, 0, 275, 50); 
+        exit.setFocusPainted(false);
+        exit.setOpaque(false); 
+        exit.setVisible(true); 
         
         //Set up
         Font Gerady_Bale = null;
@@ -64,39 +80,78 @@ public class Display implements ActionListener{
            e.printStackTrace();
         }
 
-        //getContentPane() code
-        GameScreen.setVisible(true);
 
+        //JButtons (start and exit) decor
+        if (Gerady_Bale != null) {
+            start.setFont(Gerady_Bale.deriveFont(24f)); 
+            exit.setFont(Gerady_Bale.deriveFont(24f));
+        }
+
+        //Dimensions of the content pane of the JFrame
+        GameScreen.setVisible(true);
         int screenHeight = (int)GameScreen.getContentPane().getHeight();
         int screenWidth = (int)GameScreen.getContentPane().getWidth();
+
+        //Dimensions of astraeaLogo (gameLogo is the ImageIcon that astraeaLogo displays)
         int logoHeight = (int)gameLogo.getIconHeight(); 
         int logoWidth = (int)gameLogo.getIconWidth(); 
 
+        //Dimensions of the start button
+        int startHeight = (int)start.getHeight(); 
+        int startWidth = (int)start.getWidth(); 
+
+        //Dimensions of the exit button
+        int exitHeight = (int)exit.getHeight(); 
+        int exitWidth = (int)exit.getWidth(); 
+
+
+        //Positioning everything on the JFrame
         astraeaLogo.setBounds((screenWidth - logoWidth)/2, (screenHeight - logoHeight)/2, logoWidth, logoHeight);
-        GameScreen.add(astraeaLogo); 
+        GameScreen.add(astraeaLogo);
+        start.setBounds((screenWidth - startWidth)/2, (screenHeight - startHeight)/2 + logoHeight/2, startWidth, startHeight);
+        GameScreen.add(start);
+        exit.setBounds((screenWidth - exitWidth)/2, (screenHeight - exitHeight)/2 + logoHeight/2 + 50, exitWidth, exitHeight); 
+        GameScreen.add(exit); 
+        
+        upDownAnimation(astraeaLogo, start, 25); 
+
+        //Creating an instance of this class (Display) for easier ActionListeners (less confusion about what 'this' could be)
+        Display display = new Display();
+        start.addActionListener(display);
+        exit.addActionListener(display);
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
+        //Start button starting the game and ending the animation of the bouncing Astraea logo
         if (e.getSource() == start){
             animating = false;
             animationTimer.stop();
+            astraeaLogo.setVisible(false);
+            start.setVisible(false);
+            exit.setVisible(false); 
+            GameScreen.getContentPane().setBackground(Color.WHITE); 
+        }
+
+        //Exit button on the home screen of the game
+        if (e.getSource() == exit){
+            System.exit(0); 
         }
     }
 
     public void changeScreen(){
-        //Changes the screen of the JFrame
+        //Changes the screen of the JFrame (for background to panel changes and sprite repositioning in the story)
     }
 
-    public void upDownAnimation(JLabel label, JButton button, int range){
+    public static void upDownAnimation(JLabel label, JButton button, int range){
+        //Creating an instance of this class (Display) in the method -> apparently it's so the program can access non-static variables too
+        Display temp = new Display(); 
+        
         //Setting up paramet(er/re)s -> JLabel and JButton
         label.setVisible(true);
-        label.setBounds(label.getX(), label.getY(), label.getWidth(), label.getHeight()); 
-        start = button; 
         button.setVisible(true);
-        button.setBounds(button.getX(), button.getY(), button.getWidth(), button.getHeight()); 
         button.setFocusPainted(false);
-        button.addActionListener(this);
+        button.addActionListener(temp);
 
         final int yPosStart = label.getY();
         final int yPosRange = range; 
@@ -110,16 +165,16 @@ public class Display implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 if (animating) {
                     if (!movingDown[0]){
-                        yPosC[0]--;
+                        yPosC[0]++;
 
                         if (yPosC[0] >= yPosStart + yPosRange){
-                            movingDown[0] = false; 
+                            movingDown[0] = true; 
                         }
                     } else {
-                        yPosC[0]++; 
+                        yPosC[0]--;  
 
                         if (yPosC[0] <= yPosStart - yPosRange){
-                            movingDown[0] = true; 
+                            movingDown[0] = false; 
                         } 
                     }
                     label.setLocation(label.getX(), yPosC[0]); 
@@ -128,5 +183,4 @@ public class Display implements ActionListener{
         });
         animationTimer.start();
     }
-
 }

@@ -15,11 +15,6 @@ GAME DETAILS:
 - music! all self composed
 - sound effects! stock sounds from the internet
 - visuals! all hand drawn during the december holiday break
-- Codework timeline: 
-   1. wednesday, january 7th, 2026: creating display, character, mc, sidesuppchar, options, and musicplayer classes with code in the character class
-   2. thursday, january 8th, 2026: sorting and adding files into their respective folders for easier navigation fo resources
-   3. friday, january 9th, 2026: filling in more of the readme.md, added code into display class
-   4. saturday, january 10th, 2026: 
 
 STORY SUMMARY / CONTEXT: 
 "Welcome, wayward travelers! Looking for a fantastical adventure?" 
@@ -35,3 +30,9 @@ FUTURE UPDATE PLAN:
 - pause / save buttons in case you need to go afk
 - drawing more characters and scenes
 - voicelines for side and supporting characters too
+
+UPDATE LOG: 
+   1. wednesday, january 7th, 2026: creating display, character, mc, sidesuppchar, options, and musicplayer classes with code in the character class
+   2. thursday, january 8th, 2026: sorting and adding files into their respective folders for easier navigation fo resources
+   3. friday, january 9th, 2026: filling in more of the readme.md, added code into display class
+   4. saturday, january 10th, 2026: adding bouncing animation for the logo, start button (starts game), exit button (exits program)
