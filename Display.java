@@ -1,3 +1,4 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //Swing GUI
 import javax.swing.*; 
 //ActionListener and ActionEvent for JButtons and more
@@ -14,6 +15,7 @@ import java.awt.FontFormatException;
 //getContentPane() of JFrame
 import java.awt.GraphicsEnvironment;
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DISPLAY CLASS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 public class Display implements ActionListener{
     //JFRAME
     static JFrame GameScreen; 
@@ -29,6 +31,7 @@ public class Display implements ActionListener{
 
     //JLABELS
     static JLabel astraeaLogo; 
+    static JLabel homeScreenBG; 
 
     //ARRAYS
     static String[] option1 = {}; 
@@ -41,47 +44,53 @@ public class Display implements ActionListener{
 
     //BOUNCING ANIMATION VARIABLES
     static boolean animating = true;
-    static Timer animationTimer; 
+    static Timer bouncingTimer; 
 
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SET UP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static void main(String[] args){
-        //Creating JFrame
+        //JFrame
         GameScreen = new JFrame(); 
         GameScreen.setSize(750, 750);
         GameScreen.setResizable(false); 
         GameScreen.setMaximumSize(new Dimension(750, 750));
         GameScreen.setLayout(null); 
         GameScreen.setDefaultCloseOperation(GameScreen.EXIT_ON_CLOSE);
-        //GameScreen.getContentPane().setBackground(Color.decode("#9fb5d1"));
-        //save start and exit button words into this color: "#92bbdaff"
         GameScreen.setLocationRelativeTo(null); 
+        //-> Makes the home screen background light indigo blue
+        GameScreen.getContentPane().setBackground(Color.decode("#9fb5d1")); 
 
-        JLabel HSBG = new JLabel();
-        HSBG.setBounds(0, 0, 750, 750);
-        HSBG.setIcon(homescreenBG);
-        GameScreen.add(HSBG); 
-        GameScreen.setContentPane(HSBG); 
 
-        //Creating JLabel for logo in the very beginning of the game
+        //JFrame Background Image
+        homeScreenBG = new JLabel(); 
+        homeScreenBG.setBounds(0, 0, 750, 750);
+        homeScreenBG.setIcon(homescreenBG);
+        GameScreen.add(homeScreenBG); 
+        GameScreen.setContentPane(homeScreenBG); 
+
+
+        //Game Logo JPanel
         astraeaLogo = new JLabel();
         astraeaLogo.setBounds(0, 0, 500, 500);
         astraeaLogo.setIcon(gameLogo);
 
-        //Creating JButton to start the game
+
+        //Start JButton
         start = new JButton("<html><b> Start </b></html>"); 
         start.setBounds(0, 0, 275, 50); 
         start.setFocusPainted(false); 
         start.setOpaque(false);
         start.setVisible(true);
 
-        //Creating JButton to exit the game
+
+        //Exit JButton
         exit = new JButton("<html><b> Exit </b></html>"); 
         exit.setBounds(0, 0, 275, 50); 
         exit.setFocusPainted(false);
         exit.setOpaque(false); 
         exit.setVisible(true); 
         
-        //Set up
+
+        //Font
         Font Gerady_Bale = null;
         try {
            Gerady_Bale = Font.createFont(Font.TRUETYPE_FONT, new File("VIS/DECOR/Gerady Bale.otf"));
@@ -92,11 +101,13 @@ public class Display implements ActionListener{
         }
 
 
-        //JButtons (start and exit) decor
+        // Element Decor
+        //save start and exit button words into this color: "#92bbdaff"
         if (Gerady_Bale != null) {
             start.setFont(Gerady_Bale.deriveFont(24f)); 
             exit.setFont(Gerady_Bale.deriveFont(24f));
         }
+
 
         //Dimensions of the content pane of the JFrame
         GameScreen.setVisible(true);
@@ -133,15 +144,17 @@ public class Display implements ActionListener{
         exit.addActionListener(display);
     }
 
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ACTION LISTENER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     @Override
     public void actionPerformed(ActionEvent e){
         //Start button starting the game and ending the animation of the bouncing Astraea logo
         if (e.getSource() == start){
             animating = false;
-            animationTimer.stop();
+            bouncingTimer.stop();
             astraeaLogo.setVisible(false);
             start.setVisible(false);
             exit.setVisible(false); 
+            homeScreenBG.setVisible(false); 
             GameScreen.getContentPane().setBackground(Color.WHITE); 
         }
 
@@ -151,10 +164,12 @@ public class Display implements ActionListener{
         }
     }
 
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public void changeScreen(){
         //Changes the screen of the JFrame (for background to panel changes and sprite repositioning in the story)
     }
 
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ANIMATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static void upDownAnimation(JLabel label, JButton button, int range){
         //Creating an instance of this class (Display) in the method -> apparently it's so the program can access non-static variables too
         Display temp = new Display(); 
@@ -172,7 +187,7 @@ public class Display implements ActionListener{
 
         animating = true; 
 
-        animationTimer = new Timer(30, new ActionListener(){
+        bouncingTimer = new Timer(30, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (animating) {
@@ -193,6 +208,6 @@ public class Display implements ActionListener{
                 }
             }
         });
-        animationTimer.start();
+        bouncingTimer.start();
     }
-}
+}/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FIN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
