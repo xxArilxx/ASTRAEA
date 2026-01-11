@@ -29,18 +29,49 @@ public class Display implements ActionListener{
     static JButton Option2; 
     static JButton Option3; 
 
-    //JLABELS
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~ JLABELS ~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    //Intro
     static JLabel astraeaLogo; 
-    static JLabel homeScreenBG; 
+    static JLabel gameLogo;
+    static JLabel homeScreenBG;
+    static JLabel dialogueTextBox;
+
+    //Objects
+    static JLabel musicBox;
+    static JLabel fauxHorns;
+
+    //Backgrounds
+    static JLabel home;
+    static JLabel creaturePanel;
+    static JLabel forestNoArch;
+    static JLabel forestArch;
+    static JLabel forestPortal;
+    static JLabel portalInterior;
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     //ARRAYS
     static String[] option1 = {}; 
     static String[] option2 = {}; 
     static String[] option3 = {}; 
 
-    //IMAGEICONS
-    static ImageIcon gameLogo = new ImageIcon("VIS/DECOR/Astraea.png");
-    static ImageIcon homescreenBG = new ImageIcon("VIS/DECOR/750Background.png");
+    //~~~~~~~~~~~~~~~~~~~~~~~~~ IMAGEICONS ~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    //Decor
+    static ImageIcon gameLogoIMG = new ImageIcon("VIS/DECOR/Astraea.png");
+    static ImageIcon homescreenBGIMG = new ImageIcon("VIS/DECOR/Astraea Background.png");
+    static ImageIcon dialogueTextBoxIMG = new ImageIcon("VIS/DECOR/Dialogue-Text Box.png");
+
+    //Objects
+    static ImageIcon musicBoxIMG = new ImageIcon("VIS/OBJECTS/Music Box.png");
+    static ImageIcon fauxHornsIMG = new ImageIcon("VIS/OBJECTS/ATLHorns.png"); 
+
+    //Backgrounds
+    static ImageIcon homeIMG = new ImageIcon("BG/home.png");
+    static ImageIcon creaturePanelIMG = new ImageIcon("BG/Creature Panel.png"); 
+    static ImageIcon forestNoArchIMG = new ImageIcon("BG/Forest (no arch).png"); 
+    static ImageIcon forestArchIMG = new ImageIcon("BG/Forest (arch).png"); 
+    static ImageIcon forestPortalIMG = new ImageIcon("BG/Forest (portal).png"); 
+    static ImageIcon portalInteriorIMG = new ImageIcon("BG/Portal Interior.png"); 
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     //BOUNCING ANIMATION VARIABLES
     static boolean animating = true;
@@ -50,30 +81,66 @@ public class Display implements ActionListener{
     public static void main(String[] args){
         //JFrame
         GameScreen = new JFrame(); 
-        GameScreen.setSize(750, 750);
+        GameScreen.setSize(1000, 600);
         GameScreen.setResizable(false); 
-        GameScreen.setMaximumSize(new Dimension(750, 750));
+        GameScreen.setMaximumSize(new Dimension(1000, 600));
         GameScreen.setLayout(null); 
         GameScreen.setDefaultCloseOperation(GameScreen.EXIT_ON_CLOSE);
         GameScreen.setLocationRelativeTo(null); 
-        //-> Makes the home screen background light indigo blue
-        GameScreen.getContentPane().setBackground(Color.decode("#9fb5d1")); 
 
-
-        //JFrame Background Image
+        //~~~~~~~~~~~~~~~~~JLABELS WITH THEIR IMAGEICONS~~~~~~~~~~~~~~~~~//
         homeScreenBG = new JLabel(); 
         homeScreenBG.setBounds(0, 0, 750, 750);
-        homeScreenBG.setIcon(homescreenBG);
+        homeScreenBG.setIcon(homescreenBGIMG);
         GameScreen.add(homeScreenBG); 
-        GameScreen.setContentPane(homeScreenBG); 
 
-
-        //Game Logo JPanel
         astraeaLogo = new JLabel();
         astraeaLogo.setBounds(0, 0, 500, 500);
-        astraeaLogo.setIcon(gameLogo);
+        astraeaLogo.setIcon(gameLogoIMG);
 
+        dialogueTextBox = new JLabel(); 
+        dialogueTextBox.setBounds(0, 0, 1000, 600);
+        dialogueTextBox.setIcon(dialogueTextBoxIMG); 
+        
+        //Objects
+        musicBox = new JLabel(); 
+        musicBox.setBounds(0, 0, 1000, 600);
+        musicBox.setIcon(musicBoxIMG);
 
+        fauxHorns = new JLabel(); 
+        fauxHorns.setBounds(0, 0, 1000, 600);
+        fauxHorns.setIcon(fauxHornsIMG);
+        
+        //Backgrounds
+        home = new JLabel(); 
+        home.setBounds(0, 0, 1000, 600);
+        home.setIcon(homeIMG);
+
+        creaturePanel = new JLabel(); 
+        creaturePanel.setBounds(0, 0, 1000, 600);
+        creaturePanel.setIcon(creaturePanelIMG);
+
+        forestNoArch = new JLabel(); 
+        forestNoArch.setBounds(0,0,1000,600);
+        forestNoArch.setIcon(forestNoArchIMG);
+
+        forestArch = new JLabel(); 
+        forestArch.setBounds(0, 0, 1000, 600);
+        forestArch.setIcon(forestArchIMG);
+
+        forestPortal = new JLabel(); 
+        forestPortal.setBounds(0, 0, 1000, 600);
+        forestPortal.setIcon(forestPortalIMG);
+
+        portalInterior = new JLabel(); 
+        portalInterior.setBounds(0, 0, 1000, 600);
+        portalInterior.setIcon(portalInteriorIMG);
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+        //Setting Background image
+        GameScreen.setContentPane(homeScreenBG); 
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         //Start JButton
         start = new JButton("<html><b> Start </b></html>"); 
         start.setBounds(0, 0, 275, 50); 
@@ -101,50 +168,49 @@ public class Display implements ActionListener{
         }
 
 
-        // Element Decor
+        //Element Decorating
         //save start and exit button words into this color: "#92bbdaff"
         if (Gerady_Bale != null) {
             start.setFont(Gerady_Bale.deriveFont(24f)); 
             exit.setFont(Gerady_Bale.deriveFont(24f));
         }
 
-
-        //Dimensions of the content pane of the JFrame
+        //~~~~~~~~~~~~~~~~~~DIMENSIONS AND POSITIONING~~~~~~~~~~~~~~~~~~~//
+        //Content pane
         GameScreen.setVisible(true);
 
         int screenHeight = (int)GameScreen.getContentPane().getHeight();
         int screenWidth = (int)GameScreen.getContentPane().getWidth();
 
-        //Dimensions of astraeaLogo (gameLogo is the ImageIcon that astraeaLogo displays)
-        int logoHeight = (int)gameLogo.getIconHeight(); 
-        int logoWidth = (int)gameLogo.getIconWidth(); 
+        //astraeaLogo -> gameLogo is the ImageIcon that astraeaLogo displays
+        int logoHeight = (int)gameLogoIMG.getIconHeight(); 
+        int logoWidth = (int)gameLogoIMG.getIconWidth(); 
 
-        //Dimensions of the start button
+        //start button
         int startHeight = (int)start.getHeight(); 
         int startWidth = (int)start.getWidth(); 
 
-        //Dimensions of the exit button
+        //exit button
         int exitHeight = (int)exit.getHeight(); 
         int exitWidth = (int)exit.getWidth(); 
-
 
         //Positioning everything on the JFrame
         astraeaLogo.setBounds((screenWidth - logoWidth)/2, (screenHeight - logoHeight)/2, logoWidth, logoHeight);
         GameScreen.add(astraeaLogo);
-        start.setBounds((screenWidth - startWidth)/2, (screenHeight - startHeight)/2 + logoHeight/2, startWidth, startHeight);
+        start.setBounds((screenWidth - startWidth)/2, (screenHeight - startHeight)/2 + logoHeight/2 - 50, startWidth, startHeight);
         GameScreen.add(start);
-        exit.setBounds((screenWidth - exitWidth)/2, (screenHeight - exitHeight)/2 + logoHeight/2 + 50, exitWidth, exitHeight); 
+        exit.setBounds((screenWidth - exitWidth)/2, (screenHeight - exitHeight)/2 + logoHeight/2, exitWidth, exitHeight); 
         GameScreen.add(exit); 
-        
-        upDownAnimation(astraeaLogo, start, 25); 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
         //Creating an instance of this class (Display) for easier ActionListeners (less confusion about what 'this' could be)
         Display display = new Display();
         start.addActionListener(display);
         exit.addActionListener(display);
+        upDownAnimation(astraeaLogo, start, 25); 
     }
 
-    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ACTION LISTENER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ACTIONLISTENERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     @Override
     public void actionPerformed(ActionEvent e){
         //Start button starting the game and ending the animation of the bouncing Astraea logo
@@ -155,7 +221,10 @@ public class Display implements ActionListener{
             start.setVisible(false);
             exit.setVisible(false); 
             homeScreenBG.setVisible(false); 
-            GameScreen.getContentPane().setBackground(Color.WHITE); 
+            GameScreen.getContentPane().setBackground(Color.BLACK); 
+            GameScreen.setContentPane(home);
+            GameScreen.add(dialogueTextBox); 
+            dialogueTextBox.setVisible(true);
         }
 
         //Exit button on the home screen of the game
