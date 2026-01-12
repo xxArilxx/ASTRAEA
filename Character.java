@@ -7,7 +7,6 @@ class Character {
     String nameOfCharacter;
     String nameOfSprite;
     String tempImgPath;
-    String tempVoicePath; 
 
 
     //CHAR LISTS
@@ -27,7 +26,7 @@ class Character {
        nOC = nameOfCharacter;
        nOS = nameOfSprite;
       
-       if (isMC){
+        if (isMC){
            charIndex = searchList(MCList, nOC);
             if (charIndex != -1){
                 if (nameOfSprite.equalsIgnoreCase("Atlas")){
@@ -48,11 +47,6 @@ class Character {
                 }
             }
           
-        } else {
-            charIndex = searchList(sideSuppCharList, nOC);
-            if (charIndex != -1){
-                tempVoicePath = "VOICE/Side/" + nameOfCharacter + ".wav";
-            }
         }
     }
 
@@ -77,5 +71,34 @@ class Character {
 
     public String toString(){
        return "MC: " + isMainCharacter + "\nCharacter Name: " + nameOfCharacter + "\nSprite Name: " + nameOfSprite + "In Astraea?: " + isInAstraea; 
+    }
+
+    public boolean getMainCharacter(){
+        return isMainCharacter; 
+    }
+
+    public boolean isInAstraea(){
+        return isInAstraea; 
+    }
+
+    public String getCharacterName(){
+        return nameOfCharacter; 
+    }
+
+    public String getCharacterSprite(){
+        return nameOfSprite; 
+    }
+
+    public String getImagePath(){
+        return tempImgPath; 
+    }
+
+    public void setCharacterSprite(String newSpriteName){
+        if (searchList(ATLSpriteList, newSpriteName) != -1){
+            nameOfSprite = newSpriteName; 
+            tempImgPath = "CHAR/" + nameOfCharacter + "/" + nameOfSprite + ".png";
+        } else {
+            System.out.println("Unable to change Sprite"); 
+        }
     }
 }

@@ -90,12 +90,12 @@ public class Display implements ActionListener{
 
         //~~~~~~~~~~~~~~~~~JLABELS WITH THEIR IMAGEICONS~~~~~~~~~~~~~~~~~//
         homeScreenBG = new JLabel(); 
-        homeScreenBG.setBounds(0, 0, 750, 750);
+        homeScreenBG.setBounds(0, 0, 1000, 600);
         homeScreenBG.setIcon(homescreenBGIMG);
         GameScreen.add(homeScreenBG); 
 
         astraeaLogo = new JLabel();
-        astraeaLogo.setBounds(0, 0, 500, 500);
+        astraeaLogo.setBounds(0, 0, 1000, 600);
         astraeaLogo.setIcon(gameLogoIMG);
 
         dialogueTextBox = new JLabel(); 
@@ -140,7 +140,7 @@ public class Display implements ActionListener{
         //Setting Background image
         GameScreen.setContentPane(homeScreenBG); 
 
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        //~~~~~~~~~~~~~~~~~~~~~~~~~JBUTTON SETUP~~~~~~~~~~~~~~~~~~~~~~~~~//
         //Start JButton
         start = new JButton("<html><b> Start </b></html>"); 
         start.setBounds(0, 0, 275, 50); 
@@ -155,9 +155,11 @@ public class Display implements ActionListener{
         exit.setFocusPainted(false);
         exit.setOpaque(false); 
         exit.setVisible(true); 
-        
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-        //Font
+
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~FONT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         Font Gerady_Bale = null;
         try {
            Gerady_Bale = Font.createFont(Font.TRUETYPE_FONT, new File("VIS/DECOR/Gerady Bale.otf"));
@@ -166,14 +168,20 @@ public class Display implements ActionListener{
         } catch (IOException | FontFormatException e) {
            e.printStackTrace();
         }
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~DECORATIONS~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         //Element Decorating
         //save start and exit button words into this color: "#92bbdaff"
         if (Gerady_Bale != null) {
             start.setFont(Gerady_Bale.deriveFont(24f)); 
             exit.setFont(Gerady_Bale.deriveFont(24f));
         }
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+
 
         //~~~~~~~~~~~~~~~~~~DIMENSIONS AND POSITIONING~~~~~~~~~~~~~~~~~~~//
         //Content pane
@@ -203,8 +211,15 @@ public class Display implements ActionListener{
         GameScreen.add(exit); 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-        //Creating an instance of this class (Display) for easier ActionListeners (less confusion about what 'this' could be)
-        Display display = new Display();
+
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~OBJECTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        Display display = new Display(); //for easier ActionListeners (less confusion about what 'this' could be)
+        TextReader textReader = new TextReader(); //for reading and writing to text files
+        Character Atlas = new Character(true, "Atlas", "Neutral"); 
+        Character Sol = new Character(true, "Sol", "Neutral"); 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
         start.addActionListener(display);
         exit.addActionListener(display);
         upDownAnimation(astraeaLogo, start, 25); 

@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.io.FileReader; 
 import java.io.BufferedReader; 
 
-class OptionReader{
+class TextReader{
     public static void main(String[] args){
         
     }
@@ -20,12 +20,19 @@ class OptionReader{
         }
     }
 
-    public static void read(){
+    public static String[] read(int numOfLines){
+        String[] text = new String[numOfLines];
+
         try{
             FileReader fr = new FileReader("User Options.txt"); 
             BufferedReader br = new BufferedReader(fr); 
             String temp = br.readLine(); 
             
+            for (int i = 0; i <= numOfLines; i++){
+                text[i] = temp; 
+                br.readLine();
+            }
+
             while (br != null){
                 System.out.println(temp); 
                 temp = br.readLine(); 
@@ -35,5 +42,7 @@ class OptionReader{
         } catch (IOException e){
             System.out.println("Error: " + e); 
         }
+
+        return text; 
     }
 }
