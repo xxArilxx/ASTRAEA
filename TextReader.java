@@ -5,13 +5,9 @@ import java.io.FileReader;
 import java.io.BufferedReader; 
 
 class TextReader{
-    public static void main(String[] args){
-        
-    }
-
     public static void write(String temp){
         try{
-            FileWriter fw = new FileWriter("User Options.txt");
+            FileWriter fw = new FileWriter("Already On-Screen.txt");
             PrintWriter pw = new PrintWriter(fw);
             pw.println(temp);
             pw.close();
@@ -23,7 +19,7 @@ class TextReader{
     public static String readln(){
         String temp = "";
         try {
-            FileReader fr = new FileReader("User Options.txt");
+            FileReader fr = new FileReader("Base Script.txt");
             BufferedReader br = new BufferedReader(fr);
             temp = br.readLine();
             br.close();
@@ -36,7 +32,7 @@ class TextReader{
     public static void read(int numOfLines){
         String[] text = new String[numOfLines];
         try{
-            FileReader fr = new FileReader("User Options.txt");
+            FileReader fr = new FileReader("Base Script.txt");
             BufferedReader br = new BufferedReader(fr);
 
             for (int i = 0; i < numOfLines; i++){

@@ -49,6 +49,10 @@ public class Display implements ActionListener{
     static JLabel forestArch;
     static JLabel forestPortal;
     static JLabel portalInterior;
+    static JLabel entranceToAstraea; 
+
+    //STORY TEXT
+    static JLabel textDisplay; 
     //~~~~~~~~~~~~~~~~~~~~~~~~~ IMAGEICONS ~~~~~~~~~~~~~~~~~~~~~~~~~~//
     //Decor
     static ImageIcon gameLogoIMG = new ImageIcon("VIS/DECOR/Astraea.png");
@@ -67,6 +71,9 @@ public class Display implements ActionListener{
     static ImageIcon forestArchIMG = new ImageIcon("BG/Forest (arch).png"); 
     static ImageIcon forestPortalIMG = new ImageIcon("BG/Forest (portal).png"); 
     static ImageIcon portalInteriorIMG = new ImageIcon("BG/Portal Interior.png"); 
+    static ImageIcon entranceToAstraeaIMG = new ImageIcon("BG/Entrance to Astraea.png"); 
+    static ImageIcon hideoutHiddenIMG = new ImageIcon("BG/Hideout (hidden).png"); 
+    static ImageIcon hideoutOutsideIMG = new ImageIcon("BG/Hideout (outside).png"); 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~ ARRAYS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     //Options
     static String[] option1 = {}; 
@@ -74,14 +81,18 @@ public class Display implements ActionListener{
     static String[] option3 = {}; 
 
     //Background Image
-    static ImageIcon[] backgroundIMGs = {homeIMG, creaturePanelIMG, forestNoArchIMG, forestArchIMG, forestPortalIMG, portalInteriorIMG}; 
+    static ImageIcon[] backgroundIMGs = {homeIMG, creaturePanelIMG, forestNoArchIMG, forestArchIMG, forestPortalIMG, portalInteriorIMG, entranceToAstraeaIMG, hideoutHiddenIMG, hideoutOutsideIMG}; 
+
+    //Last line of each scene
+    static String[] lastLine = {"Hello? Aaaaaanybody here?", }; 
 
     //BOUNCING ANIMATION VARIABLES
     static boolean animating = true;
     static Timer bouncingTimer; 
 
-    //INTEGERS
-    static int counter = -1; 
+    //VISUALS AND STORY SCENES
+    static int backgroundNum = 0; 
+    static boolean sceneOver = false; 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SET UP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static void main(String[] args){
@@ -94,7 +105,7 @@ public class Display implements ActionListener{
         GameScreen.setDefaultCloseOperation(GameScreen.EXIT_ON_CLOSE);
         GameScreen.setLocationRelativeTo(null); 
 
-        //JButton
+        //JButtons
         dialogueTextBox = new JButton(); 
         dialogueTextBox.setBounds(15, 395, 970, 170);
         dialogueTextBox.setIcon(dialogueTextBoxIMG); 
@@ -104,10 +115,14 @@ public class Display implements ActionListener{
         dialogueTextBox.setBorderPainted(false); 
         dialogueTextBox.setFocusPainted(false); 
 
+        //JLabel - Text Display
+        textDisplay = new JLabel("this is a tester"); 
+        textDisplay.setBounds(15, 395, 970, 170); 
+
         //~~~~~~~~~~~~~~~~~JLABELS WITH THEIR IMAGEICONS~~~~~~~~~~~~~~~~~//
-        home = new JLabel(); 
-        home.setBounds(0, 0, 1000, 600);
-        home.setIcon(homeIMG); 
+        background = new JLabel();
+        background.setBounds(0, 0, 1000, 600);
+        background.setIcon(homeIMG); 
 
         homeScreenBG = new JLabel(); 
         homeScreenBG.setBounds(0, 0, 1000, 600);
@@ -236,11 +251,11 @@ public class Display implements ActionListener{
             exit.setVisible(false); 
             homeScreenBG.setVisible(false); 
 
-            GameScreen.setContentPane(home);
+            GameScreen.setContentPane(background);
 
-            home.setLayout(null); 
-            home.add(textTriangle); 
-            home.add(dialogueTextBox); 
+            background.setLayout(null); 
+            background.add(textTriangle); 
+            background.add(dialogueTextBox); 
 
             dialogueTextBox.setVisible(true);
             textTriangle.setVisible(true); 
@@ -255,20 +270,34 @@ public class Display implements ActionListener{
         if (e.getSource() == dialogueTextBox){
             animating = false;
             bouncingTimer.stop();
-
-            nextStoryLine(); 
+            nextBackdrop(); 
         }
     }
-
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public void changeScreen(){
         //Changes the screen of the JFrame (for background to panel changes and sprite repositioning in the story)
     }
 
-    public static void nextStoryLine(){
-        counter++;  
-        background.setIcon(backgroundIMGs[counter]); 
-        GameScreen.setContentPane(background);;
+    public static void nextBackdrop(){
+        backgroundNum++;
+    
+        if (backgroundNum >= backgroundIMGs.length) {
+            backgroundNum = backgroundIMGs.length - 1;
+            return;
+        }
+    
+        background.setIcon(backgroundIMGs[backgroundNum]); 
+        background.add(textTriangle); 
+        background.add(dialogueTextBox);
+
+        dialogueTextBox.setVisible(true);
+        textTriangle.setVisible(true);
+
+        GameScreen.revalidate();
+        GameScreen.repaint();
+
+        upDownAnimation(textTriangle, dialogueTextBox, 5);
+        sceneOver = false; 
     }
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ANIMATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -280,7 +309,6 @@ public class Display implements ActionListener{
         label.setVisible(true);
         button.setVisible(true);
         button.setFocusPainted(false);
-        button.addActionListener(temp);
 
         final int yPosStart = label.getY();
         final int yPosRange = range; 
