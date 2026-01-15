@@ -28,13 +28,15 @@ public class Display implements ActionListener{
     static JButton Option1; 
     static JButton Option2; 
     static JButton Option3; 
+    static JButton dialogueTextBox;
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~ JLABELS ~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     //Intro
     static JLabel astraeaLogo; 
     static JLabel gameLogo;
     static JLabel homeScreenBG;
-    static JLabel dialogueTextBox;
+    static JLabel background; 
+    static JLabel textTriangle; 
 
     //Objects
     static JLabel musicBox;
@@ -47,18 +49,12 @@ public class Display implements ActionListener{
     static JLabel forestArch;
     static JLabel forestPortal;
     static JLabel portalInterior;
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-
-    //ARRAYS
-    static String[] option1 = {}; 
-    static String[] option2 = {}; 
-    static String[] option3 = {}; 
-
     //~~~~~~~~~~~~~~~~~~~~~~~~~ IMAGEICONS ~~~~~~~~~~~~~~~~~~~~~~~~~~//
     //Decor
     static ImageIcon gameLogoIMG = new ImageIcon("VIS/DECOR/Astraea.png");
     static ImageIcon homescreenBGIMG = new ImageIcon("VIS/DECOR/Astraea Background.png");
     static ImageIcon dialogueTextBoxIMG = new ImageIcon("VIS/DECOR/Dialogue-Text Box.png");
+    static ImageIcon textTriangleIMG = new ImageIcon("VIS/DECOR/textTriangle.png"); 
 
     //Objects
     static ImageIcon musicBoxIMG = new ImageIcon("VIS/OBJECTS/Music Box.png");
@@ -71,11 +67,21 @@ public class Display implements ActionListener{
     static ImageIcon forestArchIMG = new ImageIcon("BG/Forest (arch).png"); 
     static ImageIcon forestPortalIMG = new ImageIcon("BG/Forest (portal).png"); 
     static ImageIcon portalInteriorIMG = new ImageIcon("BG/Portal Interior.png"); 
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~ ARRAYS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    //Options
+    static String[] option1 = {}; 
+    static String[] option2 = {}; 
+    static String[] option3 = {}; 
+
+    //Background Image
+    static ImageIcon[] backgroundIMGs = {homeIMG, creaturePanelIMG, forestNoArchIMG, forestArchIMG, forestPortalIMG, portalInteriorIMG}; 
 
     //BOUNCING ANIMATION VARIABLES
     static boolean animating = true;
     static Timer bouncingTimer; 
+
+    //INTEGERS
+    static int counter = -1; 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SET UP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static void main(String[] args){
@@ -88,19 +94,33 @@ public class Display implements ActionListener{
         GameScreen.setDefaultCloseOperation(GameScreen.EXIT_ON_CLOSE);
         GameScreen.setLocationRelativeTo(null); 
 
+        //JButton
+        dialogueTextBox = new JButton(); 
+        dialogueTextBox.setBounds(15, 395, 970, 170);
+        dialogueTextBox.setIcon(dialogueTextBoxIMG); 
+
+        dialogueTextBox.setContentAreaFilled(false); 
+        dialogueTextBox.setOpaque(false);
+        dialogueTextBox.setBorderPainted(false); 
+        dialogueTextBox.setFocusPainted(false); 
+
         //~~~~~~~~~~~~~~~~~JLABELS WITH THEIR IMAGEICONS~~~~~~~~~~~~~~~~~//
+        home = new JLabel(); 
+        home.setBounds(0, 0, 1000, 600);
+        home.setIcon(homeIMG); 
+
         homeScreenBG = new JLabel(); 
         homeScreenBG.setBounds(0, 0, 1000, 600);
         homeScreenBG.setIcon(homescreenBGIMG);
         GameScreen.add(homeScreenBG); 
 
+        textTriangle = new JLabel(); 
+        textTriangle.setBounds(928, 500, 25, 24); 
+        textTriangle.setIcon(textTriangleIMG); 
+
         astraeaLogo = new JLabel();
         astraeaLogo.setBounds(0, 0, 1000, 600);
         astraeaLogo.setIcon(gameLogoIMG);
-
-        dialogueTextBox = new JLabel(); 
-        dialogueTextBox.setBounds(0, 0, 1000, 600);
-        dialogueTextBox.setIcon(dialogueTextBoxIMG); 
         
         //Objects
         musicBox = new JLabel(); 
@@ -110,31 +130,7 @@ public class Display implements ActionListener{
         fauxHorns = new JLabel(); 
         fauxHorns.setBounds(0, 0, 1000, 600);
         fauxHorns.setIcon(fauxHornsIMG);
-        
-        //Backgrounds
-        home = new JLabel(); 
-        home.setBounds(0, 0, 1000, 600);
-        home.setIcon(homeIMG);
-
-        creaturePanel = new JLabel(); 
-        creaturePanel.setBounds(0, 0, 1000, 600);
-        creaturePanel.setIcon(creaturePanelIMG);
-
-        forestNoArch = new JLabel(); 
-        forestNoArch.setBounds(0,0,1000,600);
-        forestNoArch.setIcon(forestNoArchIMG);
-
-        forestArch = new JLabel(); 
-        forestArch.setBounds(0, 0, 1000, 600);
-        forestArch.setIcon(forestArchIMG);
-
-        forestPortal = new JLabel(); 
-        forestPortal.setBounds(0, 0, 1000, 600);
-        forestPortal.setIcon(forestPortalIMG);
-
-        portalInterior = new JLabel(); 
-        portalInterior.setBounds(0, 0, 1000, 600);
-        portalInterior.setIcon(portalInteriorIMG);
+    
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
         //Setting Background image
@@ -216,12 +212,12 @@ public class Display implements ActionListener{
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~OBJECTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         Display display = new Display(); //for easier ActionListeners (less confusion about what 'this' could be)
         TextReader textReader = new TextReader(); //for reading and writing to text files
-        Character Atlas = new Character(true, "Atlas", "Neutral"); 
-        Character Sol = new Character(true, "Sol", "Neutral"); 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
         start.addActionListener(display);
         exit.addActionListener(display);
+        dialogueTextBox.addActionListener(display); 
+
         upDownAnimation(astraeaLogo, start, 25); 
     }
 
@@ -230,27 +226,49 @@ public class Display implements ActionListener{
     public void actionPerformed(ActionEvent e){
         //Start button starting the game and ending the animation of the bouncing Astraea logo
         if (e.getSource() == start){
+            //Ends animation
             animating = false;
             bouncingTimer.stop();
+
+            //Happens after animation
             astraeaLogo.setVisible(false);
             start.setVisible(false);
             exit.setVisible(false); 
             homeScreenBG.setVisible(false); 
-            GameScreen.getContentPane().setBackground(Color.BLACK); 
+
             GameScreen.setContentPane(home);
-            GameScreen.add(dialogueTextBox); 
+
+            home.setLayout(null); 
+            home.add(textTriangle); 
+            home.add(dialogueTextBox); 
+
             dialogueTextBox.setVisible(true);
+            textTriangle.setVisible(true); 
+            upDownAnimation(textTriangle, dialogueTextBox, 5);
         }
 
         //Exit button on the home screen of the game
         if (e.getSource() == exit){
             System.exit(0); 
         }
+
+        if (e.getSource() == dialogueTextBox){
+            animating = false;
+            bouncingTimer.stop();
+
+            nextStoryLine(); 
+        }
     }
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public void changeScreen(){
         //Changes the screen of the JFrame (for background to panel changes and sprite repositioning in the story)
+    }
+
+    public static void nextStoryLine(){
+        counter++;  
+        background.setIcon(backgroundIMGs[counter]); 
+        GameScreen.setContentPane(background);;
     }
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ANIMATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

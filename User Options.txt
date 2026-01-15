@@ -1,3 +1,8 @@
+Input:  enter their name
+Outputs:  
+IF (contains only letters): Wonderful! Now, let’s get on with the show!  -> save name into String
+ELSE: How does one pronounce that? Let’s just go with “Friend” now, shall we? -> save “Friend” into String
+
 1 -> She just wanted attention
 [Maybe, but I don’t think so. Let’s continue on and find the answer…]
 2 -> Parents.
