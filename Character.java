@@ -11,7 +11,6 @@ class Character {
 
     //CHAR LISTS
     String[] MCList = {"Atlas", "Sol", "The Supreme"};
-    String[] sideSuppCharList = {""};
 
 
     //SPRITE LISTS

@@ -5,9 +5,9 @@ import java.io.FileReader;
 import java.io.BufferedReader; 
 
 class TextReader{
-    public static void write(String temp){
+    public static void write(String temp, String fileName){
         try{
-            FileWriter fw = new FileWriter("Already On-Screen.txt");
+            FileWriter fw = new FileWriter(fileName);
             PrintWriter pw = new PrintWriter(fw);
             pw.println(temp);
             pw.close();
@@ -16,10 +16,10 @@ class TextReader{
         }
     }
 
-    public static String readln(){
+    public static String readln(String fileName){
         String temp = "";
         try {
-            FileReader fr = new FileReader("Base Script.txt");
+            FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
             temp = br.readLine();
             br.close();
@@ -29,10 +29,10 @@ class TextReader{
         return temp;
     }
 
-    public static void read(int numOfLines){
+    public static void read(int numOfLines, String fileName){
         String[] text = new String[numOfLines];
         try{
-            FileReader fr = new FileReader("Base Script.txt");
+            FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
 
             for (int i = 0; i < numOfLines; i++){
@@ -50,5 +50,43 @@ class TextReader{
                 System.out.println(temp);
             }
         }
+    }
+
+    public static int lineCounter(String fileName) {
+        int counter = 0;
+        try {
+            FileReader fr = new FileReader(fileName);    
+            BufferedReader br = new BufferedReader(fr);
+            String temp;
+            while ((temp = br.readLine()) != null) {
+                counter++;
+            }
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Error: " + e); 
+        }
+        return counter; 
+    }
+
+    public static String readAll(String fileName) {
+        StringBuilder fullText = new StringBuilder();
+
+        try {
+            FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            boolean firstLine = true;
+            while ((line = br.readLine()) != null) {
+                if (!firstLine) {
+                    fullText.append(System.lineSeparator()); 
+                }
+                fullText.append(line);
+                firstLine = false;
+            }
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
+        }
+        return fullText.toString();
     }
 }

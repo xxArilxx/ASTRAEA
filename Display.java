@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 //Font setup imports
 import java.io.IOException;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -23,6 +24,8 @@ public class Display implements ActionListener{
     //JBUTTONS
     static JButton start; 
     static JButton next; 
+    static JButton context; 
+    static JButton howToPlay; 
     static JButton exit; 
     static JButton dialogueHistory; 
     static JButton Option1; 
@@ -94,6 +97,10 @@ public class Display implements ActionListener{
     static int backgroundNum = 0; 
     static boolean sceneOver = false; 
 
+    //~~~~~~~~~~~~~~~~~~~~~~~~~ JTEXTAREAS ~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    static JTextArea contextLabel; 
+    static JTextArea instructions; 
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SET UP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static void main(String[] args){
         //JFrame
@@ -104,16 +111,6 @@ public class Display implements ActionListener{
         GameScreen.setLayout(null); 
         GameScreen.setDefaultCloseOperation(GameScreen.EXIT_ON_CLOSE);
         GameScreen.setLocationRelativeTo(null); 
-
-        //JButtons
-        dialogueTextBox = new JButton(); 
-        dialogueTextBox.setBounds(15, 395, 970, 170);
-        dialogueTextBox.setIcon(dialogueTextBoxIMG); 
-
-        dialogueTextBox.setContentAreaFilled(false); 
-        dialogueTextBox.setOpaque(false);
-        dialogueTextBox.setBorderPainted(false); 
-        dialogueTextBox.setFocusPainted(false); 
 
         //JLabel - Text Display
         textDisplay = new JLabel("this is a tester"); 
@@ -166,6 +163,30 @@ public class Display implements ActionListener{
         exit.setFocusPainted(false);
         exit.setOpaque(false); 
         exit.setVisible(true); 
+
+        //Context JButton
+        context = new JButton("<html><b>Story Context</b></html>"); 
+        context.setBounds(0, 0, 275, 50); 
+        context.setFocusPainted(false); 
+        context.setOpaque(false);
+        context.setVisible(true); 
+
+        //How to Play JButton
+        howToPlay = new JButton("<html><b>How to Play</b></html>"); 
+        howToPlay.setBounds(0, 0, 275, 50); 
+        howToPlay.setFocusPainted(false); 
+        howToPlay.setOpaque(false);
+        howToPlay.setVisible(true); 
+
+        //Dialogue Box
+        dialogueTextBox = new JButton(); 
+        dialogueTextBox.setBounds(15, 395, 970, 170);
+        dialogueTextBox.setIcon(dialogueTextBoxIMG); 
+
+        dialogueTextBox.setContentAreaFilled(false); 
+        dialogueTextBox.setOpaque(false);
+        dialogueTextBox.setBorderPainted(false); 
+        dialogueTextBox.setFocusPainted(false); 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 
@@ -189,6 +210,8 @@ public class Display implements ActionListener{
         if (Gerady_Bale != null) {
             start.setFont(Gerady_Bale.deriveFont(24f)); 
             exit.setFont(Gerady_Bale.deriveFont(24f));
+            context.setFont(Gerady_Bale.deriveFont(24f)); 
+            howToPlay.setFont(Gerady_Bale.deriveFont(24f)); 
         }
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
@@ -213,13 +236,27 @@ public class Display implements ActionListener{
         int exitHeight = (int)exit.getHeight(); 
         int exitWidth = (int)exit.getWidth(); 
 
+        //context button
+        int contextHeight = (int)context.getHeight(); 
+        int contextWidth = (int)howToPlay.getWidth(); 
+
+        //how to play button
+        int howToPlayHeight = (int)howToPlay.getHeight();
+        int howToPlayWidth = (int)howToPlay.getWidth(); 
+
         //Positioning everything on the JFrame
         astraeaLogo.setBounds((screenWidth - logoWidth)/2, (screenHeight - logoHeight)/2, logoWidth, logoHeight);
-        GameScreen.add(astraeaLogo);
         start.setBounds((screenWidth - startWidth)/2, (screenHeight - startHeight)/2 + logoHeight/2 - 50, startWidth, startHeight);
-        GameScreen.add(start);
         exit.setBounds((screenWidth - exitWidth)/2, (screenHeight - exitHeight)/2 + logoHeight/2, exitWidth, exitHeight); 
+        context.setBounds((1000 - contextWidth), 5 , contextWidth, contextHeight); 
+        howToPlay.setBounds((1000 - howToPlayWidth), 55, howToPlayWidth, howToPlayHeight); 
+
+        //Adding all the elements to the JFrame
+        GameScreen.add(astraeaLogo);
+        GameScreen.add(start);
         GameScreen.add(exit); 
+        GameScreen.add(context); 
+        GameScreen.add(howToPlay); 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 
@@ -231,6 +268,8 @@ public class Display implements ActionListener{
 
         start.addActionListener(display);
         exit.addActionListener(display);
+        context.addActionListener(display); 
+        howToPlay.addActionListener(display); 
         dialogueTextBox.addActionListener(display); 
 
         upDownAnimation(astraeaLogo, start, 25); 
@@ -249,6 +288,8 @@ public class Display implements ActionListener{
             astraeaLogo.setVisible(false);
             start.setVisible(false);
             exit.setVisible(false); 
+            context.setVisible(false); 
+            howToPlay.setVisible(false);
             homeScreenBG.setVisible(false); 
 
             GameScreen.setContentPane(background);
@@ -265,6 +306,16 @@ public class Display implements ActionListener{
         //Exit button on the home screen of the game
         if (e.getSource() == exit){
             System.exit(0); 
+        }
+
+        //Context
+        if (e.getSource() == context){
+            displayPopup("Story Context", "Context.txt");  
+        }
+
+        //How to Play
+        if (e.getSource() == howToPlay){
+            displayPopup("Story Context", "Instructions.txt");  
         }
 
         if (e.getSource() == dialogueTextBox){
@@ -298,6 +349,35 @@ public class Display implements ActionListener{
 
         upDownAnimation(textTriangle, dialogueTextBox, 5);
         sceneOver = false; 
+    }
+    
+    public static void displayPopup(String title, String filePath) {
+        JDialog dialog = new JDialog(GameScreen, title, true);
+        dialog.setSize(700, 500);
+        dialog.setLocationRelativeTo(GameScreen);
+        dialog.setLayout(new BorderLayout());
+
+        JTextArea textArea = new JTextArea();
+    
+        textArea.setText(TextReader.readAll(filePath));
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setEditable(false);
+        textArea.setFont(new Font("Serif", Font.PLAIN, 16));
+        textArea.setMargin(new java.awt.Insets(15, 15, 15, 15));
+    
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        dialog.add(scrollPane, BorderLayout.CENTER);
+    
+        JButton closeButton = new JButton("Close");
+        closeButton.setFont(new Font("Serif", Font.BOLD, 16));
+        closeButton.addActionListener(e -> dialog.dispose());
+        
+        JPanel buttonPanel = new JPanel(); 
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        buttonPanel.add(closeButton);
+        dialog.add(buttonPanel, BorderLayout.SOUTH);
+        dialog.setVisible(true);
     }
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ANIMATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

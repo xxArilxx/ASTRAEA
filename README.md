@@ -24,13 +24,6 @@ You wonder why reading could be such an adventure as you hesitantly enter the li
 
 Filled with whimsicality, friendship, and love, this sappy story is accompanied by domestic rejection, tyranny, manipulation and more harsh subjects that may not be suitable for those below the age of 12. You follow a young girl named Atlas as she ventures away from her neon world to a seemingly perfect land of pastels and... dictatorship?... as she learns that nothing is perfect, no matter how beautiful they may appear; the true beauty being finding the light within a seemly vast darkness; and that it's simply better to just be yourself and live on, no matter how difficult life may get. 
 
-UPDATE LOG: 
-   1. wednesday, january 7th, 2026: creating display, character, mc, sidesuppchar, options, and musicplayer classes with code in the character class
-   2. thursday, january 8th, 2026: sorting and adding files into their respective folders for easier navigation fo resources
-   3. friday, january 9th, 2026: filling in more of the readme.md, added code into display class
-   4. saturday, january 10th, 2026: adding bouncing animation for the logo, start button (starts game), exit button (exits program)
-   5. sunday, january 11th, 2026: created all imageicons and their respective jlabels, hitting the start button on the home screen now moves to the beginning of the game
-
 FUTURE UPDATE PLAN: 
 - this story currently contains two different endings on one singular path -> more paths and endings to the story will be added
 - pause / save buttons in case you need to go afk
