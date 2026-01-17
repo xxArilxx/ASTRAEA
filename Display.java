@@ -89,17 +89,21 @@ public class Display implements ActionListener{
     //Last line of each scene
     static String[] lastLine = {"Hello? Aaaaaanybody here?", }; 
 
+    //~~~~~~~~~~~~~~~~~~~~~~~~~ JTEXTAREAS ~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    static JTextArea contextLabel; 
+    static JTextArea instructions; 
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~ EXTRAS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     //BOUNCING ANIMATION VARIABLES
     static boolean animating = true;
     static Timer bouncingTimer; 
 
     //VISUALS AND STORY SCENES
-    static int backgroundNum = 0; 
+    static int sceneNum = 0; 
     static boolean sceneOver = false; 
-
-    //~~~~~~~~~~~~~~~~~~~~~~~~~ JTEXTAREAS ~~~~~~~~~~~~~~~~~~~~~~~~~~//
-    static JTextArea contextLabel; 
-    static JTextArea instructions; 
+    static Font Gerady_Bale = null; 
+    static Font Oaty_Milk = null; 
+    static String userName = ""; 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SET UP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static void main(String[] args){
@@ -109,8 +113,8 @@ public class Display implements ActionListener{
         GameScreen.setResizable(false); 
         GameScreen.setMaximumSize(new Dimension(1000, 600));
         GameScreen.setLayout(null); 
-        GameScreen.setDefaultCloseOperation(GameScreen.EXIT_ON_CLOSE);
-        GameScreen.setLocationRelativeTo(null); 
+        GameScreen.setDefaultCloseOperation(3); //GameScreen.EXIT_ON_CLOSE is associated with the int 3 (it had a yellow line and it annoyed me)
+        GameScreen.setLocationRelativeTo(null); //Centers JFrame to the screen
 
         //JLabel - Text Display
         textDisplay = new JLabel("this is a tester"); 
@@ -192,11 +196,16 @@ public class Display implements ActionListener{
 
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~FONT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-        Font Gerady_Bale = null;
         try {
-           Gerady_Bale = Font.createFont(Font.TRUETYPE_FONT, new File("VIS/DECOR/Gerady Bale.otf"));
-           GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-           ge.registerFont(Gerady_Bale);
+            //Gerady Bale
+            Gerady_Bale = Font.createFont(Font.TRUETYPE_FONT, new File("VIS/DECOR/Gerady Bale.otf"));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Gerady_Bale);
+
+            //Oaty Milk
+            Oaty_Milk = Font.createFont(Font.TRUETYPE_FONT, new File("VIS/DECOR/Oaty Milk.otf"));
+            GraphicsEnvironment om = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            om.registerFont(Oaty_Milk);
         } catch (IOException | FontFormatException e) {
            e.printStackTrace();
         }
@@ -262,8 +271,8 @@ public class Display implements ActionListener{
 
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~OBJECTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-        Display display = new Display(); //for easier ActionListeners (less confusion about what 'this' could be)
-        TextReader textReader = new TextReader(); //for reading and writing to text files
+        //Creating an instance of this class (Display) in the method -> apparently it's so the program can access non-static variables too
+        Display display = new Display(); 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
         start.addActionListener(display);
@@ -280,6 +289,9 @@ public class Display implements ActionListener{
     public void actionPerformed(ActionEvent e){
         //Start button starting the game and ending the animation of the bouncing Astraea logo
         if (e.getSource() == start){
+            //Before animation ends
+            userInputName();
+
             //Ends animation
             animating = false;
             bouncingTimer.stop();
@@ -295,6 +307,7 @@ public class Display implements ActionListener{
             GameScreen.setContentPane(background);
 
             background.setLayout(null); 
+            background.add(textDisplay); 
             background.add(textTriangle); 
             background.add(dialogueTextBox); 
 
@@ -308,36 +321,49 @@ public class Display implements ActionListener{
             System.exit(0); 
         }
 
-        //Context
+        //Context button -> popup
         if (e.getSource() == context){
             displayPopup("Story Context", "Context.txt");  
         }
 
-        //How to Play
+        //How to Play button -> popup
         if (e.getSource() == howToPlay){
-            displayPopup("Story Context", "Instructions.txt");  
+            displayPopup("Instructions", "Instructions.txt");  
         }
 
+        //Next line of story
         if (e.getSource() == dialogueTextBox){
             animating = false;
-            bouncingTimer.stop();
-            nextBackdrop(); 
+            bouncingTimer.stop(); 
+            if (sceneOver){
+                nextBackdrop(); 
+            } else {
+                String line = TextReader.readln("Base Script.txt"); 
+            
+                if (line.equals(lastLine[sceneNum])){
+                    sceneOver = true; 
+                } else {
+                    textDisplay.setText(line);
+                }
+            }
         }
     }
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    public void changeScreen(){
-        //Changes the screen of the JFrame (for background to panel changes and sprite repositioning in the story)
+    public static void userInputName(){
+        userName = JOptionPane.showInputDialog("What is your name?");
+        TextReader.write(userName, "Guest of Astraea.txt"); 
+        TextReader.write(userName, "Previous Guests of Astraea.txt", true); 
     }
 
     public static void nextBackdrop(){
-        backgroundNum++;
+        sceneNum++;
     
-        if (backgroundNum >= backgroundIMGs.length) {
-            backgroundNum = backgroundIMGs.length - 1;
+        if (sceneNum >= backgroundIMGs.length) {
+            sceneNum = backgroundIMGs.length - 1;
             return;
         }
     
-        background.setIcon(backgroundIMGs[backgroundNum]); 
+        background.setIcon(backgroundIMGs[sceneNum]); 
         background.add(textTriangle); 
         background.add(dialogueTextBox);
 
@@ -363,14 +389,27 @@ public class Display implements ActionListener{
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
-        textArea.setFont(new Font("Serif", Font.PLAIN, 16));
+        
+        if (Gerady_Bale != null) {
+            textArea.setFont(Oaty_Milk.deriveFont(30f).deriveFont(Font.BOLD)); 
+        } else {
+            textArea.setFont(new Font("Serif", Font.BOLD, 30));
+        }
+    
+        textArea.setFont(Oaty_Milk.deriveFont(30f));
         textArea.setMargin(new java.awt.Insets(15, 15, 15, 15));
     
         JScrollPane scrollPane = new JScrollPane(textArea);
         dialog.add(scrollPane, BorderLayout.CENTER);
     
         JButton closeButton = new JButton("Close");
-        closeButton.setFont(new Font("Serif", Font.BOLD, 16));
+        
+        if (Gerady_Bale != null) {
+            closeButton.setFont(Gerady_Bale.deriveFont(30f).deriveFont(Font.BOLD)); 
+        } else {
+            closeButton.setFont(new Font("Serif", Font.BOLD, 30));
+        }
+
         closeButton.addActionListener(e -> dialog.dispose());
         
         JPanel buttonPanel = new JPanel(); 
@@ -382,9 +421,6 @@ public class Display implements ActionListener{
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ANIMATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static void upDownAnimation(JLabel label, JButton button, int range){
-        //Creating an instance of this class (Display) in the method -> apparently it's so the program can access non-static variables too
-        Display temp = new Display(); 
-        
         //Setting up paramet(er/re)s -> JLabel and JButton
         label.setVisible(true);
         button.setVisible(true);

@@ -16,6 +16,17 @@ class TextReader{
         }
     }
 
+    public static void write(String temp, String fileName, boolean save){
+        try{
+            FileWriter fw = new FileWriter(fileName, save);
+            PrintWriter pw = new PrintWriter(fw);
+            pw.println(temp);
+            pw.close();
+        } catch (IOException e){
+            System.out.println("Error: " + e);
+        }
+    }
+
     public static String readln(String fileName){
         String temp = "";
         try {
@@ -57,8 +68,7 @@ class TextReader{
         try {
             FileReader fr = new FileReader(fileName);    
             BufferedReader br = new BufferedReader(fr);
-            String temp;
-            while ((temp = br.readLine()) != null) {
+            while (br.readLine() != null) {
                 counter++;
             }
             br.close();
