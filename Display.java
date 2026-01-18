@@ -124,8 +124,9 @@ public class Display implements ActionListener{
         "impression.wav",
         "impression.wav", 
         "impression.wav",
-        "alstroemeria.wav",
-        "alstroemeria.wav",
+        "impression.wav",
+        "impression.wav",
+        "alstroemeria.wav", 
         "the supreme.wav",
         "cellar.wav",
         "daffodil.wav", 
@@ -580,7 +581,7 @@ public class Display implements ActionListener{
         }
 
         while (!nameEntered) {
-            Object result = JOptionPane.showInputDialog(GameScreen,"What is your name?","Name Entry", JOptionPane.QUESTION_MESSAGE, null, null, "");
+            Object result = JOptionPane.showInputDialog(GameScreen,"How would you like to be addressed?","Name Entry", JOptionPane.QUESTION_MESSAGE, null, null, "");
             
             // Check if user clicked Cancel or closed the dialog (X button)
             if (result == null) {

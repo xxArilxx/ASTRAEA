@@ -1,14 +1,15 @@
-Welcome, welcome iohibhoi! You’re just in time for tonight’s story: Astraea by Dusk Dawning. 
+Welcome, welcome afaef! You’re just in time for tonight’s story: Astraea by Dusk Dawning. 
 Our tale begins in a cottage on the outskirts of the small village Orion, way up in the attic...
 There lived a young girl by the name of Atlas. To all the villagers, she was the perfect daughter of the best chief in Orion history; polite, intelligent, graceful, and quiet
 Little did they know her façade would slip off the moment she stepped foot back into the place she had to call home. 
 Though a poised lady on the surface, she could not have been more different. 
 She was rebellious and imaginative, spirited and loud in an explosive childlike way. 
 Unfo(u)rtunately for our poor Atlas, this version of her was but a distant daydream, something that she could never become beyond her imagination. 
-Why do you think that is, iohibhoi?
+Why do you think that is, afaef?
 [CHOICE]
+[PLACEHOLDER BECAUSE IT SKIPS THIS LINE EVERY TIME]
 Ma, Pa, I’m back. 
-...
+...No response. You can hear screaming and arguing noises in the background. 
 So much for home, sweet home. 
 ...them. Her dreadful parents who loved her to bits. 
 I... think they forgot... about today... if only they paid attention to their only child more than their petty arguments... 
@@ -44,8 +45,9 @@ Woah...! What’s happening...!!
 
 With a gentle whoosh the stone arch turned into a swirly portal with a pastel light. 
 The music from the box was playing gently as if asking her to walk through before time was up. 
-What do you think happens after, dear iohibhoi? 
+What do you think happens after, dear afaef? 
 [CHOICE]
+[PLACEHOLDER BECAUSE IT SKIPS THIS LINE EVERY TIME]
 She jumps in like there’s no tomorrow! I would assume she did so just to satiate her own curiosity, but her parents do seem to be a big part of her decision as well. 
 
 
@@ -62,6 +64,7 @@ Atlas practically flung herself backwards. Squatting beside her was a young girl
 ...Who’re you? 
 You… don’t recognize your best friend? Did you replace me already? 
 [CHOICE]
+[PLACEHOLDER BECAUSE IT SKIPS THIS LINE EVERY TIME]
 Oh my goodness, what happened to you? You’re alive! 
 Yeah, can you believe it? Plus I can do this now...
 Sol closed her eyes as a glowing crown of light formed from her forehead. 
@@ -83,3 +86,6 @@ Oh sorry! I forgot you can't see them since it's your first time. Give me a sec.
 Sol knocks against the hill a couple times and we can see a little door appear with small pearl handles. 
 
 Woah! 
+Tada!! This is the "Super Secret Supreme Usurper Squad" hideout! They'll be able to answer all the questions you have that I can't answer!
+Sol knocks on the door in a rhythm Atlas had never heard before. 
+A small hole appears on one of the pearl handles and Atlas got chills, feeling something was staring at her. 
