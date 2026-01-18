@@ -1,20 +1,20 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //Swing GUI
 import javax.swing.*; 
-//ActionListener and ActionEvent for JButtons and more
+
+//ActionListener and ActionEvent for JButtons
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//File readers
-import java.io.File;
-import java.io.FileWriter;
+
 //Font setup imports
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
+
 //getContentPane() of JFrame
 import java.awt.GraphicsEnvironment;
 
