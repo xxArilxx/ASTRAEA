@@ -6,8 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //File readers
 import java.io.File;
+import java.io.FileWriter;
 //Font setup imports
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,6 +34,7 @@ public class Display implements ActionListener{
     static JButton Option2; 
     static JButton Option3; 
     static JButton dialogueTextBox;
+    static JButton homeButton; 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~ JLABELS ~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     //Intro
@@ -62,12 +65,15 @@ public class Display implements ActionListener{
     static ImageIcon homescreenBGIMG = new ImageIcon("VIS/DECOR/Astraea Background.png");
     static ImageIcon dialogueTextBoxIMG = new ImageIcon("VIS/DECOR/Dialogue-Text Box.png");
     static ImageIcon textTriangleIMG = new ImageIcon("VIS/DECOR/textTriangle.png"); 
+    static ImageIcon optionBoxIMG = new ImageIcon("VIS/DECOR/Option Box.png");
+    static ImageIcon homeButtonIMG = new ImageIcon("VIS/DECOR/Home Button.png");
 
     //Objects
     static ImageIcon musicBoxIMG = new ImageIcon("VIS/OBJECTS/Music Box.png");
     static ImageIcon fauxHornsIMG = new ImageIcon("VIS/OBJECTS/ATLHorns.png"); 
 
     //Backgrounds
+    static ImageIcon startingIMG = new ImageIcon("BG/Start.png"); 
     static ImageIcon homeIMG = new ImageIcon("BG/home.png");
     static ImageIcon creaturePanelIMG = new ImageIcon("BG/Creature Panel.png"); 
     static ImageIcon forestNoArchIMG = new ImageIcon("BG/Forest (no arch).png"); 
@@ -79,15 +85,66 @@ public class Display implements ActionListener{
     static ImageIcon hideoutOutsideIMG = new ImageIcon("BG/Hideout (outside).png"); 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~ ARRAYS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     //Options
-    static String[] option1 = {}; 
-    static String[] option2 = {}; 
-    static String[] option3 = {}; 
+    static String[] option1 = {
+        "She just wanted attention", "", "", "", "", 
+        "She goes in without a second thought", "", 
+        "...Sol?"}; 
+
+    static String[] option2 = {
+        "Parents.",  "", "", "", "", 
+        "She thinks about it , then heads home", "", 
+        "No! You're my best friend, always have been...?"}; 
+
+    static String[] option3 = {
+        "I'm not sure...",  "", "", "", "", 
+        "She immediately backs away from the portal and goes home", "", 
+        "Who're you exactly...?"}; 
+
+    static String[] response1 = {
+        "Maybe, but I don't think so. Let's continue on and find the answer...",  "", "", "", "", 
+        "Yes! Exactly right!", "", 
+        "Yes! Yes, it's me!"}; 
+
+    static String[] response2 = {
+        "First try! Bravo!",  "", "", "", "", 
+        "I would like to believe you were on the right track, then you went off the rails! You see...", "", 
+        "So you really don't recognize me... It's Sol! The deer!!"}; 
+
+    static String[] response3 = {
+        "Don't worry, [USER NAME]! Let's get back to the story, shall we?",  "", "", "", "", 
+        "Honestly, dear [USER NAME] , we've already established she's an adventurous soul! Why would you believe she would do something as mature as this?", "", 
+        "I'm Sol!!"}; 
+
+    static String[] musicInOrder = {
+        "home.wav",
+        "home.wav", 
+        "home.wav", 
+        "forest.wav",
+        "forest.wav", 
+        "impression.wav",
+        "impression.wav", 
+        "impression.wav",
+        "alstroemeria.wav",
+        "alstroemeria.wav",
+        "the supreme.wav",
+        "cellar.wav",
+        "daffodil.wav", 
+        "hyacinth.wav"
+    }; 
 
     //Background Image
-    static ImageIcon[] backgroundIMGs = {homeIMG, creaturePanelIMG, forestNoArchIMG, forestArchIMG, forestPortalIMG, portalInteriorIMG, entranceToAstraeaIMG, hideoutHiddenIMG, hideoutOutsideIMG}; 
-
-    //Last line of each scene
-    static String[] lastLine = {"Hello? Aaaaaanybody here?", }; 
+    static ImageIcon[] backgroundIMGs = {
+        startingIMG, 
+        homeIMG, 
+        creaturePanelIMG, 
+        forestNoArchIMG, 
+        forestArchIMG, 
+        forestPortalIMG, 
+        portalInteriorIMG, 
+        entranceToAstraeaIMG, 
+        hideoutHiddenIMG, 
+        hideoutOutsideIMG
+    }; 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~ JTEXTAREAS ~~~~~~~~~~~~~~~~~~~~~~~~~~//
     static JTextArea contextLabel; 
@@ -104,6 +161,10 @@ public class Display implements ActionListener{
     static Font Gerady_Bale = null; 
     static Font Oaty_Milk = null; 
     static String userName = ""; 
+    static int gameLogoX;
+    static int gameLogoY; 
+    static int gameLogoW;
+    static int gameLogoH; 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SET UP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static void main(String[] args){
@@ -117,13 +178,13 @@ public class Display implements ActionListener{
         GameScreen.setLocationRelativeTo(null); //Centers JFrame to the screen
 
         //JLabel - Text Display
-        textDisplay = new JLabel("this is a tester"); 
-        textDisplay.setBounds(15, 395, 970, 170); 
+        textDisplay = new JLabel(""); 
+        textDisplay.setBounds(45, 400, 970, 170); 
 
         //~~~~~~~~~~~~~~~~~JLABELS WITH THEIR IMAGEICONS~~~~~~~~~~~~~~~~~//
         background = new JLabel();
         background.setBounds(0, 0, 1000, 600);
-        background.setIcon(homeIMG); 
+        background.setIcon(startingIMG); 
 
         homeScreenBG = new JLabel(); 
         homeScreenBG.setBounds(0, 0, 1000, 600);
@@ -147,7 +208,51 @@ public class Display implements ActionListener{
         fauxHorns.setBounds(0, 0, 1000, 600);
         fauxHorns.setIcon(fauxHornsIMG);
     
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        //~~~~~~~~~~~~~~~~~~~JBUTTONS WITH IMAGEICONS~~~~~~~~~~~~~~~~~~~~//
+        //Home Button
+        homeButton = new JButton(); 
+        homeButton.setBounds(0, 0, 80, 80); 
+        homeButton.setIcon(homeButtonIMG); 
+        homeButton.setBorderPainted(false);
+
+        //Option 1
+        Option1 = new JButton(); 
+        Option1.setBounds(306, 200, 388, 68);
+        Option1.setIcon(optionBoxIMG);
+
+        Option1.setContentAreaFilled(false); 
+        Option1.setOpaque(false);
+        Option1.setBorderPainted(false); 
+        Option1.setFocusPainted(false); 
+
+        background.add(Option1); 
+        Option1.setVisible(false); 
+
+        //Option 2
+        Option2 = new JButton(); 
+        Option2.setBounds(306, 300, 388, 68);
+        Option2.setIcon(optionBoxIMG);
+
+        Option2.setContentAreaFilled(false); 
+        Option2.setOpaque(false);
+        Option2.setBorderPainted(false); 
+        Option2.setFocusPainted(false); 
+
+        background.add(Option2); 
+        Option2.setVisible(false); 
+
+        //Option 3
+        Option3 = new JButton(); 
+        Option3.setBounds(306, 400, 388, 68);
+        Option3.setIcon(optionBoxIMG);
+        
+        Option3.setContentAreaFilled(false); 
+        Option3.setOpaque(false);
+        Option3.setBorderPainted(false); 
+        Option3.setFocusPainted(false); 
+
+        background.add(Option3); 
+        Option3.setVisible(false); 
 
         //Setting Background image
         GameScreen.setContentPane(homeScreenBG); 
@@ -215,12 +320,21 @@ public class Display implements ActionListener{
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~DECORATIONS~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         //Element Decorating
-        //save start and exit button words into this color: "#92bbdaff"
-        if (Gerady_Bale != null) {
+        if (Gerady_Bale != null && Oaty_Milk != null) {
             start.setFont(Gerady_Bale.deriveFont(24f)); 
+            start.setForeground(new Color (45, 93, 130, 255)); 
+
             exit.setFont(Gerady_Bale.deriveFont(24f));
+            exit.setForeground(new Color (45, 93, 130, 255)); 
+
             context.setFont(Gerady_Bale.deriveFont(24f)); 
+            context.setForeground(new Color (45, 93, 130, 255)); 
+
             howToPlay.setFont(Gerady_Bale.deriveFont(24f)); 
+            howToPlay.setForeground(new Color (45, 93, 130, 255)); 
+
+            textDisplay.setFont(Oaty_Milk.deriveFont(20f)); 
+            textDisplay.setForeground(new Color (45, 93, 130, 255)); 
         }
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
@@ -260,6 +374,11 @@ public class Display implements ActionListener{
         context.setBounds((1000 - contextWidth), 5 , contextWidth, contextHeight); 
         howToPlay.setBounds((1000 - howToPlayWidth), 55, howToPlayWidth, howToPlayHeight); 
 
+        gameLogoX = (screenWidth - logoWidth) / 2; 
+        gameLogoY = (screenHeight - logoHeight) / 2; 
+        gameLogoW = logoWidth; 
+        gameLogoH = logoHeight; 
+
         //Adding all the elements to the JFrame
         GameScreen.add(astraeaLogo);
         GameScreen.add(start);
@@ -280,6 +399,7 @@ public class Display implements ActionListener{
         context.addActionListener(display); 
         howToPlay.addActionListener(display); 
         dialogueTextBox.addActionListener(display); 
+        homeButton.addActionListener(display); 
 
         upDownAnimation(astraeaLogo, start, 25); 
     }
@@ -290,7 +410,12 @@ public class Display implements ActionListener{
         //Start button starting the game and ending the animation of the bouncing Astraea logo
         if (e.getSource() == start){
             //Before animation ends
-            userInputName();
+            userName = userInputName();
+            TextReader.setupScript(userName); 
+            //MusicPlayer.stopMusic();
+            MusicPlayer.playMusic(musicInOrder[sceneNum]);
+
+            astraeaLogo.setBounds(gameLogoX, gameLogoY, gameLogoW, gameLogoH);
 
             //Ends animation
             animating = false;
@@ -306,11 +431,20 @@ public class Display implements ActionListener{
 
             GameScreen.setContentPane(background);
 
+            String line = TextReader.readAndDelete("Script.txt"); 
+
+            if (line != null && !line.isEmpty()) {
+                textDisplay.setText(line);
+            } 
+
             background.setLayout(null); 
+            background.add(homeButton); 
             background.add(textDisplay); 
             background.add(textTriangle); 
             background.add(dialogueTextBox); 
 
+            homeButton.setVisible(true); 
+            textDisplay.setVisible(true); 
             dialogueTextBox.setVisible(true);
             textTriangle.setVisible(true); 
             upDownAnimation(textTriangle, dialogueTextBox, 5);
@@ -318,7 +452,28 @@ public class Display implements ActionListener{
 
         //Exit button on the home screen of the game
         if (e.getSource() == exit){
-            System.exit(0); 
+            if (Oaty_Milk != null) {
+                UIManager.put("OptionPane.messageFont", Oaty_Milk.deriveFont(25f));
+                UIManager.put("OptionPane.buttonFont", Oaty_Milk.deriveFont(20f));
+            }
+
+            int choice = JOptionPane.showConfirmDialog(GameScreen,"Are you sure you want to exit the game?","Exit Game", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+            if (choice == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            } else {
+                return;
+            }
+        }
+
+        //Home button -> back to intro screen
+        if (e.getSource() == homeButton){
+            int choice = JOptionPane.showConfirmDialog(GameScreen, "<html>Are you sure you want to return to the main menu?<br>Your progress will be lost</html>", "Return to Main Menu?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (choice != JOptionPane.YES_OPTION) {
+                return; 
+            }
+
+            resetGame(); 
         }
 
         //Context button -> popup
@@ -333,26 +488,135 @@ public class Display implements ActionListener{
 
         //Next line of story
         if (e.getSource() == dialogueTextBox){
-            animating = false;
-            bouncingTimer.stop(); 
             if (sceneOver){
                 nextBackdrop(); 
             } else {
-                String line = TextReader.readln("Base Script.txt"); 
-            
-                if (line.equals(lastLine[sceneNum])){
-                    sceneOver = true; 
-                } else {
-                    textDisplay.setText(line);
+                String line = TextReader.readAndDelete("Script.txt"); 
+
+                if (line.equals("[CHOICE]")){
+                    userChoice();
+                    return; 
                 }
+
+                if (line == null || line.isEmpty()) {
+                    sceneOver = true;
+                    return;
+                }
+                textDisplay.setText(line);
+
+                Option1.setVisible(false); 
+                Option2.setVisible(false); 
+                Option3.setVisible(false); 
             }
         }
     }
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    public static void userInputName(){
-        userName = JOptionPane.showInputDialog("What is your name?");
-        TextReader.write(userName, "Guest of Astraea.txt"); 
-        TextReader.write(userName, "Previous Guests of Astraea.txt", true); 
+    public static void userChoice(){
+        dialogueTextBox.setEnabled(false);
+
+        Option1.setText(option1[sceneNum]); 
+        Option1.setHorizontalTextPosition(JButton.CENTER);
+        Option1.setVerticalTextPosition(JButton.CENTER);
+        
+        Option2.setText(option2[sceneNum]);
+        Option2.setHorizontalTextPosition(JButton.CENTER);
+        Option2.setVerticalTextPosition(JButton.CENTER);
+    
+        Option3.setText(option3[sceneNum]);
+        Option3.setHorizontalTextPosition(JButton.CENTER);
+        Option3.setVerticalTextPosition(JButton.CENTER);
+
+    ActionListener choiceListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String response = "";
+            
+            if (e.getSource() == Option1) {
+                response = response1[sceneNum];
+            } else if (e.getSource() == Option2) {
+                response = response2[sceneNum];
+            } else if (e.getSource() == Option3) {
+                response = response3[sceneNum];
+            }
+
+            response = replaceUserName(response);
+            
+            Option1.setVisible(false);
+            Option2.setVisible(false);
+            Option3.setVisible(false);
+
+            Option1.removeActionListener(this);
+            Option2.removeActionListener(this);
+            Option3.removeActionListener(this);
+            
+            textDisplay.setText(response);
+            
+            String line = TextReader.readAndDelete("Script.txt");
+            if (line != null && line.equals("[CHOICE]")) {
+                line = TextReader.readAndDelete("Script.txt");
+            }
+            
+            dialogueTextBox.setEnabled(true);
+        }
+    };
+
+    Option1.addActionListener(choiceListener);
+    Option2.addActionListener(choiceListener);
+    Option3.addActionListener(choiceListener);
+
+    Option1.setVisible(true); 
+    Option2.setVisible(true); 
+    Option3.setVisible(true); 
+}
+    
+    public static String userInputName() {
+        String userName = "";
+        boolean nameEntered = false;
+        
+        // Set custom font for JOptionPane
+        if (Oaty_Milk != null) {
+            UIManager.put("OptionPane.messageFont", Oaty_Milk.deriveFont(25f));
+            UIManager.put("OptionPane.buttonFont", Oaty_Milk.deriveFont(20f));
+        }
+
+        while (!nameEntered) {
+            Object result = JOptionPane.showInputDialog(GameScreen,"What is your name?","Name Entry", JOptionPane.QUESTION_MESSAGE, null, null, "");
+            
+            // Check if user clicked Cancel or closed the dialog (X button)
+            if (result == null) {
+                // User clicked Cancel or closed the dialog
+                int choice = JOptionPane.showConfirmDialog(GameScreen,"Are you sure you want to exit the game?","Exit Game", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                
+                if (choice == JOptionPane.YES_OPTION) {
+                    System.exit(0); 
+                } else {
+                    // User chose No, continue asking for name
+                    continue;
+                }
+            }
+            
+            // Convert result to String
+            userName = (String) result;
+            
+            // Validate the input
+            userName = userName.trim();
+            
+            if (userName.isEmpty() || userName.matches("\\s+")) {
+                JOptionPane.showMessageDialog(
+                    GameScreen,
+                    "Please enter a name",
+                    "Empty Entry",
+                    JOptionPane.WARNING_MESSAGE
+                );
+            } else {
+                nameEntered = true;
+            }
+        }
+        // Save the name
+        TextReader.write(userName, "Guest of Astraea.txt");
+        TextReader.write(userName + System.lineSeparator(), "Previous Guests of Astraea.txt", true);
+
+        return userName;
     }
 
     public static void nextBackdrop(){
@@ -361,6 +625,13 @@ public class Display implements ActionListener{
         if (sceneNum >= backgroundIMGs.length) {
             sceneNum = backgroundIMGs.length - 1;
             return;
+        }
+
+    
+        if (sceneNum < musicInOrder.length && !musicInOrder[sceneNum].isEmpty()) {
+            if (sceneNum == 0 || !musicInOrder[sceneNum].equals(musicInOrder[sceneNum-1])) {
+                MusicPlayer.playMusic(musicInOrder[sceneNum]);
+            }
         }
     
         background.setIcon(backgroundIMGs[sceneNum]); 
@@ -378,12 +649,21 @@ public class Display implements ActionListener{
     }
     
     public static void displayPopup(String title, String filePath) {
+    
         JDialog dialog = new JDialog(GameScreen, title, true);
         dialog.setSize(700, 500);
         dialog.setLocationRelativeTo(GameScreen);
         dialog.setLayout(new BorderLayout());
 
         JTextArea textArea = new JTextArea();
+
+        //Hides Caret (text pointer thingy)
+        textArea.setCaret(new javax.swing.text.DefaultCaret() {
+            @Override
+            public void setVisible(boolean vis) {
+                super.setVisible(false); 
+            }
+        });
     
         textArea.setText(TextReader.readAll(filePath));
         textArea.setLineWrap(true);
@@ -398,6 +678,7 @@ public class Display implements ActionListener{
     
         textArea.setFont(Oaty_Milk.deriveFont(30f));
         textArea.setMargin(new java.awt.Insets(15, 15, 15, 15));
+        
     
         JScrollPane scrollPane = new JScrollPane(textArea);
         dialog.add(scrollPane, BorderLayout.CENTER);
@@ -406,8 +687,7 @@ public class Display implements ActionListener{
         
         if (Gerady_Bale != null) {
             closeButton.setFont(Gerady_Bale.deriveFont(30f).deriveFont(Font.BOLD)); 
-        } else {
-            closeButton.setFont(new Font("Serif", Font.BOLD, 30));
+            textArea.setForeground(new Color (45, 93, 130, 255)); 
         }
 
         closeButton.addActionListener(e -> dialog.dispose());
@@ -419,6 +699,64 @@ public class Display implements ActionListener{
         dialog.setVisible(true);
     }
 
+    public static String replaceUserName(String response){
+        if (response == null) {
+            return response;
+        }
+
+        String result = response;
+    
+        if (userName != null && !userName.isEmpty()) {
+            result = result.replace("[USER NAME]", userName);
+        } else {
+            result = result.replace("[USER NAME]", "friend");
+        }
+    
+        return result;
+    }
+    
+    public static void resetGame(){
+        if (bouncingTimer != null && bouncingTimer.isRunning()) {
+            bouncingTimer.stop();
+        }
+        
+        MusicPlayer.stopMusic();
+        TextReader.setupScript(userName);
+        sceneNum = -1;
+        sceneOver = false;
+    
+        GameScreen.setContentPane(homeScreenBG);
+        homeScreenBG.setLayout(null);
+        
+        background.removeAll();
+
+        homeScreenBG.add(astraeaLogo);
+        homeScreenBG.add(start);
+        homeScreenBG.add(exit);
+        homeScreenBG.add(context);
+        homeScreenBG.add(howToPlay);
+
+        astraeaLogo.setVisible(true);
+        start.setVisible(true);
+        exit.setVisible(true); 
+        context.setVisible(true); 
+        howToPlay.setVisible(true);
+        homeScreenBG.setVisible(true);
+    
+        homeButton.setVisible(false); 
+        dialogueTextBox.setVisible(false);
+        textTriangle.setVisible(false);
+        Option1.setVisible(false);
+        Option2.setVisible(false);
+        Option3.setVisible(false);
+    
+        textDisplay.setVisible(false);
+
+        GameScreen.revalidate();
+        GameScreen.repaint();
+
+        upDownAnimation(astraeaLogo, start, 25);
+    }
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ANIMATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static void upDownAnimation(JLabel label, JButton button, int range){
         //Setting up paramet(er/re)s -> JLabel and JButton

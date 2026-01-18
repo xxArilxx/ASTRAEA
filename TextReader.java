@@ -5,8 +5,30 @@ import java.io.FileReader;
 import java.io.BufferedReader; 
 
 class TextReader{
+    public static String replaceUserName(String fileName, String userName) {
+        if (userName == null){
+            userName = "friend"; 
+        }
+
+        String content = readAll(fileName);
+    
+        if (content != null && userName != null && !userName.isEmpty()) {
+            content = content.replace("[USER NAME]", userName);
+        }
+        return content;
+    }
+    
+    public static void setupScript(String userName) {
+        String masterScript = readAll("Master Script.txt");
+
+        if (masterScript != null && userName != null && !userName.isEmpty()) {
+            masterScript = masterScript.replace("[USER NAME]", userName);
+            write(masterScript, "Script.txt");
+        }
+    }
+
     public static void write(String temp, String fileName){
-        try{
+        try {
             FileWriter fw = new FileWriter(fileName);
             PrintWriter pw = new PrintWriter(fw);
             pw.println(temp);
@@ -28,15 +50,18 @@ class TextReader{
     }
 
     public static String readln(String fileName){
-        String temp = "";
+        String temp = null;  
+    
         try {
             FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
             temp = br.readLine();
+
             br.close();
         } catch (IOException e){
             System.out.println("Error: " + e);
         }
+
         return temp;
     }
 
@@ -60,6 +85,35 @@ class TextReader{
             if (temp != null) {
                 System.out.println(temp);
             }
+        }
+    }
+
+    public static void deleteln(String fileName){
+        try {
+            FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr); 
+            
+            StringBuilder content = new StringBuilder();
+            String line;
+            boolean firstLine = true;
+        
+            while ((line = br.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false; 
+                    continue;
+                }
+                content.append(line);
+                content.append(System.lineSeparator());
+            }
+            br.close();
+
+            FileWriter fw = new FileWriter(fileName);
+            PrintWriter pw = new PrintWriter(fw);
+
+            pw.print(content.toString());
+            pw.close();
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
         }
     }
 
@@ -98,5 +152,39 @@ class TextReader{
             System.out.println("Error: " + e);
         }
         return fullText.toString();
+    }
+
+    public static String readAndDelete(String fileName){
+        String firstLine = null;
+
+        try {    
+            FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr); 
+
+            firstLine = br.readLine();
+            if (firstLine == null) {
+                br.close();
+                return null; 
+            }
+            
+            StringBuilder content = new StringBuilder();
+            String line;
+    
+            while ((line = br.readLine()) != null) {
+                content.append(line);
+                content.append(System.lineSeparator());
+            }
+    
+            br.close();
+        
+            FileWriter fw = new FileWriter(fileName);
+            PrintWriter pw = new PrintWriter(fw);
+
+            pw.print(content.toString());
+            pw.close();
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
+        }
+        return firstLine;
     }
 }
