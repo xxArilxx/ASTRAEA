@@ -57,19 +57,22 @@ public class Display implements ActionListener{
     static JLabel portalInterior;
     static JLabel entranceToAstraea; 
 
+    //Characters
+    static JLabel characterDisplay; 
+
     //STORY TEXT
     static JLabel textDisplay; 
     //~~~~~~~~~~~~~~~~~~~~~~~~~ IMAGEICONS ~~~~~~~~~~~~~~~~~~~~~~~~~~//
     //Decor
-    static ImageIcon gameLogoIMG = new ImageIcon("VIS/DECOR/Astraea.png");
-    static ImageIcon homescreenBGIMG = new ImageIcon("VIS/DECOR/Astraea Background.png");
-    static ImageIcon dialogueTextBoxIMG = new ImageIcon("VIS/DECOR/Dialogue-Text Box.png");
+    static ImageIcon gameLogoIMG = new ImageIcon("VIS/DECOR/Astraea.png"); 
+    static ImageIcon homescreenBGIMG = new ImageIcon("VIS/DECOR/Astraea Background.png"); 
+    static ImageIcon dialogueTextBoxIMG = new ImageIcon("VIS/DECOR/Dialogue-Text Box.png"); 
     static ImageIcon textTriangleIMG = new ImageIcon("VIS/DECOR/textTriangle.png"); 
-    static ImageIcon optionBoxIMG = new ImageIcon("VIS/DECOR/Option Box.png");
-    static ImageIcon homeButtonIMG = new ImageIcon("VIS/DECOR/Home Button.png");
+    static ImageIcon optionBoxIMG = new ImageIcon("VIS/DECOR/Option Box.png"); 
+    static ImageIcon homeButtonIMG = new ImageIcon("VIS/DECOR/Home Button.png"); 
 
     //Objects
-    static ImageIcon musicBoxIMG = new ImageIcon("VIS/OBJECTS/Music Box.png");
+    static ImageIcon musicBoxIMG = new ImageIcon("VIS/OBJECTS/Music Box.png"); 
     static ImageIcon fauxHornsIMG = new ImageIcon("VIS/OBJECTS/ATLHorns.png"); 
 
     //Backgrounds
@@ -83,6 +86,32 @@ public class Display implements ActionListener{
     static ImageIcon entranceToAstraeaIMG = new ImageIcon("BG/Entrance to Astraea.png"); 
     static ImageIcon hideoutHiddenIMG = new ImageIcon("BG/Hideout (hidden).png"); 
     static ImageIcon hideoutOutsideIMG = new ImageIcon("BG/Hideout (outside).png"); 
+
+    //Characters
+    
+    static ImageIcon ATLANeutral = new ImageIcon("CHAR/Atlas/ATLANeutral.png"); 
+    static ImageIcon ATLAAngry = new ImageIcon("CHAR/Atlas/ATLAAngry.png"); 
+    static ImageIcon ATLASad = new ImageIcon("CHAR/Atlas/ATLASad.png"); 
+    static ImageIcon ATLASmile = new ImageIcon("CHAR/Atlas/ATLASmile.png"); 
+    static ImageIcon ATLAThinking = new ImageIcon("CHAR/Atlas/ATLAThinking.png"); 
+    static ImageIcon ATLONeutral = new ImageIcon("CHAR/Atlas/ATLONeutral.png"); 
+    static ImageIcon ATLOAngry = new ImageIcon("CHAR/Atlas/ATLOAngry.png"); 
+    static ImageIcon ATLOSad = new ImageIcon("CHAR/Atlas/ATLOSad.png"); 
+    static ImageIcon ATLOSmile = new ImageIcon("CHAR/Atlas/ATLOSmile.png"); 
+    static ImageIcon ATLOThinking = new ImageIcon("CHAR/Atlas/ATLOThinking.png"); 
+
+    static ImageIcon SOLNeutral = new ImageIcon("CHAR/Sol/SOLNeutral.png"); 
+    static ImageIcon SOLAngry = new ImageIcon("CHAR/Sol/SOLAngry.png"); 
+    static ImageIcon SOLAwaken = new ImageIcon("CHAR/Sol/SOLAwaken.png");
+    static ImageIcon SOLExcited = new ImageIcon("CHAR/Sol/SOLExcited.png"); 
+    static ImageIcon SOLSad = new ImageIcon("CHAR/Sol/SOLSad.png"); 
+    static ImageIcon SOLThinking = new ImageIcon("CHAR/Sol/SOLThinking.png"); 
+
+    static ImageIcon SUPNeutral = new ImageIcon("CHAR/The Supreme/SUPNeutral.png"); 
+    static ImageIcon SUPFurious = new ImageIcon("CHAR/The Supreme/SUPFurious.png"); 
+    static ImageIcon SUPSmirk = new ImageIcon("CHAR/The Supreme/SUPSmirk.png");
+    static ImageIcon SUPSurprised = new ImageIcon("CHAR/The Supreme/SUPSurprised.png");
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~ ARRAYS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     //Options
     static String[] option1 = {
@@ -147,6 +176,40 @@ public class Display implements ActionListener{
         hideoutOutsideIMG
     }; 
 
+    //Character Sprites
+    
+    /* static ImageIcon[] AtlasAstraeaSprites = {
+        ATLANeutral, 
+        ATLAAngry,
+        ATLASad,
+        ATLASmile, 
+        ATLAThinking
+    };
+
+    static ImageIcon[] AtlasOrionSprites = {
+        ATLONeutral, 
+        ATLOAngry, 
+        ATLOSad,
+        ATLOSmile, 
+        ATLOThinking
+    }; 
+
+    static ImageIcon[] SolSprites = {
+        SOLNeutral, 
+        SOLAngry,
+        SOLAwaken,
+        SOLExcited, 
+        SOLSad, 
+        SOLThinking
+    }; 
+
+    static ImageIcon[] SupremeSprites = {
+        SUPFurious, 
+        SUPNeutral, 
+        SUPSmirk, 
+        SUPSurprised
+    }; */
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~ JTEXTAREAS ~~~~~~~~~~~~~~~~~~~~~~~~~~//
     static JTextArea contextLabel; 
     static JTextArea instructions; 
@@ -162,9 +225,9 @@ public class Display implements ActionListener{
     static Font Gerady_Bale = null; 
     static Font Oaty_Milk = null; 
     static String userName = ""; 
-    static int gameLogoX;
+    static int gameLogoX; 
     static int gameLogoY; 
-    static int gameLogoW;
+    static int gameLogoW; 
     static int gameLogoH; 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SET UP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -181,6 +244,10 @@ public class Display implements ActionListener{
         //JLabel - Text Display
         textDisplay = new JLabel(""); 
         textDisplay.setBounds(45, 400, 970, 170); 
+
+        //Creating the JLabels for the characters
+        characterDisplay = new JLabel();
+        characterDisplay.setBounds(0, 0, 250, 250); 
 
         //~~~~~~~~~~~~~~~~~JLABELS WITH THEIR IMAGEICONS~~~~~~~~~~~~~~~~~//
         background = new JLabel();
@@ -435,6 +502,7 @@ public class Display implements ActionListener{
             String line = TextReader.readAndDelete("Script.txt"); 
 
             if (line != null && !line.isEmpty()) {
+                line = updateCharacterSprite(line);
                 textDisplay.setText(line);
             } 
 
@@ -443,6 +511,7 @@ public class Display implements ActionListener{
             background.add(textDisplay); 
             background.add(textTriangle); 
             background.add(dialogueTextBox); 
+            background.add(characterDisplay);
 
             homeButton.setVisible(true); 
             textDisplay.setVisible(true); 
@@ -503,6 +572,8 @@ public class Display implements ActionListener{
                     sceneOver = true;
                     return;
                 }
+                
+                line = updateCharacterSprite(line);
                 textDisplay.setText(line);
 
                 Option1.setVisible(false); 
@@ -550,6 +621,7 @@ public class Display implements ActionListener{
             Option2.removeActionListener(this);
             Option3.removeActionListener(this);
             
+            response = updateCharacterSprite(response);
             textDisplay.setText(response);
             
             String line = TextReader.readAndDelete("Script.txt");
@@ -582,7 +654,9 @@ public class Display implements ActionListener{
 
         while (!nameEntered) {
             Object result = JOptionPane.showInputDialog(GameScreen,"How would you like to be addressed?","Name Entry", JOptionPane.QUESTION_MESSAGE, null, null, "");
+
             
+
             // Check if user clicked Cancel or closed the dialog (X button)
             if (result == null) {
                 // User clicked Cancel or closed the dialog
@@ -591,7 +665,6 @@ public class Display implements ActionListener{
                 if (choice == JOptionPane.YES_OPTION) {
                     System.exit(0); 
                 } else {
-                    // User chose No, continue asking for name
                     continue;
                 }
             }
@@ -794,5 +867,40 @@ public class Display implements ActionListener{
             }
         });
         bouncingTimer.start();
+    }
+
+    public static void changeSprite(Character name, String charName, String spriteName){
+        String filePath = name.spritePath(charName, spriteName); 
+
+        characterDisplay.setIcon(new ImageIcon(filePath)); 
+    }
+
+    public static String updateCharacterSprite(String line) {
+    
+        if (line == null) {
+            characterDisplay.setIcon(null);
+            return line;
+        }
+    
+    
+        if (line.contains("ATLAS:")) {
+            characterDisplay.setIcon(ATLONeutral);
+            characterDisplay.setVisible(true);
+    
+            return line.replace("ATLAS:", "").trim();
+        } else if (line.contains("SOL:")) {
+            characterDisplay.setIcon(SOLNeutral);
+            characterDisplay.setVisible(true);
+    
+            return line.replace("SOL:", "").trim();
+        } else if (line.contains("THE SUPREME:")) {
+            characterDisplay.setIcon(SUPNeutral);
+            characterDisplay.setVisible(true);
+
+            return line.replace("THE SUPREME:", "").trim();
+        } else {
+            characterDisplay.setVisible(false);
+            return line;
+        }
     }
 }/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FIN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

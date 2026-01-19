@@ -1,12 +1,10 @@
 class Character {
     //BOOLS
-    boolean isMainCharacter;
-    boolean isInAstraea;
+    boolean receivedHeadband;
 
    //STRINGS
     String nameOfCharacter;
     String nameOfSprite;
-    String tempImgPath;
 
 
     //CHAR LISTS
@@ -18,86 +16,55 @@ class Character {
     String[] SOLSpriteList = {"Neutral", "Awaken", "Excited", "Sad", "Angry", "Thinking"};
     String[] SUPSpriteList = {"Neutral", "Smirk", "Surprised", "Furious"};
 
+    public Character(String charName, String spriteName){
+        nameOfCharacter = charName;
+        nameOfSprite = spriteName; 
+    } 
 
-    public Character(boolean isMC, String nOC, String nOS){
-       int charIndex;
-       int spriteIndex;
-       nOC = nameOfCharacter;
-       nOS = nameOfSprite;
-      
-        if (isMC){
-           charIndex = searchList(MCList, nOC);
-            if (charIndex != -1){
-                if (nameOfSprite.equalsIgnoreCase("Atlas")){
-                   spriteIndex = searchList(ATLSpriteList, nOS);
-                    if (spriteIndex != -1){
-                       tempImgPath = "CHAR/" + nameOfCharacter + "/" + nameOfSprite + ".png";
-                    }
-                } else if (nameOfSprite.equalsIgnoreCase("Sol")) {
-                   spriteIndex = searchList(SOLSpriteList, nOS);
-                    if (spriteIndex != -1){
-                       tempImgPath = "CHAR/" + nameOfCharacter + "/" + nameOfSprite + ".png";
-                    }
+    public String spritePath(String charName, String spriteName){
+        String filePath = "";
+
+        if (charName.equals("Atlas")){
+            int exists = check(ATLSpriteList, spriteName); 
+
+            if (exists != -1){
+                if (receivedHeadband){
+                    filePath = "CHAR/Atlas/ATLA" + spriteName +  ".png"; 
                 } else {
-                   spriteIndex = searchList(SUPSpriteList, nOS);
-                    if (spriteIndex != -1){
-                       tempImgPath = "CHAR/" + nameOfCharacter + "/" + nameOfSprite + ".png";
-                    }
+                    filePath = "CHAR/Atlas/ATLO" + spriteName +  ".png"; 
                 }
             }
-          
-        }
-    }
 
-    public Character(){
-        nameOfCharacter = ""; 
-        nameOfSprite = ""; 
-    }
-  
-    public int searchList(String[] list, String name){
-       int index = -1;
-        for (int i = 0; i < list.length; i++){
-            if (list[i].equals(name)){
-               index = i;
+        } else if (charName.equals("Sol")){
+            int exists = check(SOLSpriteList, spriteName); 
+
+            if (exists != -1){
+                filePath = "CHAR/Sol/SOL" + spriteName +  ".png"; 
+            }
+
+        } else {
+            int exists = check(SUPSpriteList, spriteName); 
+
+            if (exists != -1){
+                filePath = "CHAR/The Supreme/SUP" + spriteName + ".png"; 
             }
         }
-        if (index == -1){
-           System.out.println("Not found");
-        }
-      
-       return index;
+
+        return filePath; 
     }
 
-    public String toString(){
-       return "MC: " + isMainCharacter + "\nCharacter Name: " + nameOfCharacter + "\nSprite Name: " + nameOfSprite + "In Astraea?: " + isInAstraea; 
+    public int check(String[] list, String name){
+      int index = -1;
+       for (int i = 0; i < list.length; i++){
+           if (list[i].equals(name)){
+              index = i;
+           }
+       }
+       if (index == -1){
+          System.out.println("Not found");
+       }
+    
+      return index;
     }
 
-    public boolean getMainCharacter(){
-        return isMainCharacter; 
-    }
-
-    public boolean isInAstraea(){
-        return isInAstraea; 
-    }
-
-    public String getCharacterName(){
-        return nameOfCharacter; 
-    }
-
-    public String getCharacterSprite(){
-        return nameOfSprite; 
-    }
-
-    public String getImagePath(){
-        return tempImgPath; 
-    }
-
-    public void setCharacterSprite(String newSpriteName){
-        if (searchList(ATLSpriteList, newSpriteName) != -1){
-            nameOfSprite = newSpriteName; 
-            tempImgPath = "CHAR/" + nameOfCharacter + "/" + nameOfSprite + ".png";
-        } else {
-            System.out.println("Unable to change Sprite"); 
-        }
-    }
 }
