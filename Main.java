@@ -19,7 +19,7 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DISPLAY CLASS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-public class Display implements ActionListener{
+public class Main implements ActionListener{
     //JFRAME
     static JFrame GameScreen; 
 
@@ -425,7 +425,7 @@ public class Display implements ActionListener{
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~OBJECTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         //Creating an instance of this class (Display) in the method -> apparently it's so the program can access non-static variables too
-        Display display = new Display(); 
+        Main display = new Main(); 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
         start.addActionListener(display);
