@@ -176,40 +176,6 @@ public class Display implements ActionListener{
         hideoutOutsideIMG
     }; 
 
-    //Character Sprites
-    
-    /* static ImageIcon[] AtlasAstraeaSprites = {
-        ATLANeutral, 
-        ATLAAngry,
-        ATLASad,
-        ATLASmile, 
-        ATLAThinking
-    };
-
-    static ImageIcon[] AtlasOrionSprites = {
-        ATLONeutral, 
-        ATLOAngry, 
-        ATLOSad,
-        ATLOSmile, 
-        ATLOThinking
-    }; 
-
-    static ImageIcon[] SolSprites = {
-        SOLNeutral, 
-        SOLAngry,
-        SOLAwaken,
-        SOLExcited, 
-        SOLSad, 
-        SOLThinking
-    }; 
-
-    static ImageIcon[] SupremeSprites = {
-        SUPFurious, 
-        SUPNeutral, 
-        SUPSmirk, 
-        SUPSurprised
-    }; */
-
     //~~~~~~~~~~~~~~~~~~~~~~~~~ JTEXTAREAS ~~~~~~~~~~~~~~~~~~~~~~~~~~//
     static JTextArea contextLabel; 
     static JTextArea instructions; 
@@ -247,7 +213,7 @@ public class Display implements ActionListener{
 
         //Creating the JLabels for the characters
         characterDisplay = new JLabel();
-        characterDisplay.setBounds(0, 0, 250, 250); 
+        characterDisplay.setBounds(0, 0, 500, 500); 
 
         //~~~~~~~~~~~~~~~~~JLABELS WITH THEIR IMAGEICONS~~~~~~~~~~~~~~~~~//
         background = new JLabel();
@@ -507,11 +473,11 @@ public class Display implements ActionListener{
             } 
 
             background.setLayout(null); 
-            background.add(homeButton); 
             background.add(textDisplay); 
             background.add(textTriangle); 
             background.add(dialogueTextBox); 
             background.add(characterDisplay);
+            background.add(homeButton); 
 
             homeButton.setVisible(true); 
             textDisplay.setVisible(true); 
@@ -796,13 +762,17 @@ public class Display implements ActionListener{
         
         MusicPlayer.stopMusic();
         TextReader.setupScript(userName);
-        sceneNum = -1;
+        sceneNum = 0;
         sceneOver = false;
     
         GameScreen.setContentPane(homeScreenBG);
         homeScreenBG.setLayout(null);
         
         background.removeAll();
+
+        background.add(Option1);
+        background.add(Option2);
+        background.add(Option3);
 
         homeScreenBG.add(astraeaLogo);
         homeScreenBG.add(start);
@@ -831,7 +801,7 @@ public class Display implements ActionListener{
 
         upDownAnimation(astraeaLogo, start, 25);
     }
-    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ANIMATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
     public static void upDownAnimation(JLabel label, JButton button, int range){
         //Setting up paramet(er/re)s -> JLabel and JButton
         label.setVisible(true);
@@ -869,35 +839,33 @@ public class Display implements ActionListener{
         bouncingTimer.start();
     }
 
-    public static void changeSprite(Character name, String charName, String spriteName){
-        String filePath = name.spritePath(charName, spriteName); 
-
-        characterDisplay.setIcon(new ImageIcon(filePath)); 
-    }
-
     public static String updateCharacterSprite(String line) {
-    
         if (line == null) {
             characterDisplay.setIcon(null);
             return line;
         }
-    
-    
+
         if (line.contains("ATLAS:")) {
             characterDisplay.setIcon(ATLONeutral);
+            characterDisplay.setBounds(0, 0, 500, 500); 
             characterDisplay.setVisible(true);
-    
+
             return line.replace("ATLAS:", "").trim();
+
         } else if (line.contains("SOL:")) {
             characterDisplay.setIcon(SOLNeutral);
+            characterDisplay.setBounds(-60, 20, 500, 500); 
             characterDisplay.setVisible(true);
-    
+
             return line.replace("SOL:", "").trim();
+
         } else if (line.contains("THE SUPREME:")) {
             characterDisplay.setIcon(SUPNeutral);
+            characterDisplay.setBounds(-55, 25, 500, 500); 
             characterDisplay.setVisible(true);
 
             return line.replace("THE SUPREME:", "").trim();
+
         } else {
             characterDisplay.setVisible(false);
             return line;

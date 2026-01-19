@@ -7,7 +7,6 @@ GAME INSTRUCTIONS:
 - click the start button to start the story from the beginning and click the exit button to leave
 - enter your name or username into the game so we can address you! 
 - done reading before the voicelines finishes? click the text! 
-- want to review the story? click the history button! 
 - interacting with the story?: when questions are asked, click which option you'd like to respond with! 
 
 GAME DETAILS: 
