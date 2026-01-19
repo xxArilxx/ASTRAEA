@@ -664,7 +664,6 @@ public class Display implements ActionListener{
     
         if (sceneNum >= backgroundIMGs.length) {
             sceneNum = backgroundIMGs.length - 1;
-            return;
         }
 
     
