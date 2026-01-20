@@ -19,7 +19,7 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DISPLAY CLASS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-public class Main implements ActionListener{
+public class Display implements ActionListener{
     //JFRAME
     static JFrame GameScreen; 
 
@@ -132,17 +132,17 @@ public class Main implements ActionListener{
     static String[] response1 = {
         "Maybe, but I don't think so. Let's continue on and find the answer...",  "", "", "", "", 
         "Yes! Exactly right!", "", 
-        "Yes! Yes, it's me!"}; 
+        "SOL: Yes! Yes, it's me!"}; 
 
     static String[] response2 = {
         "First try! Bravo!",  "", "", "", "", 
         "I would like to believe you were on the right track, then you went off the rails! You see...", "", 
-        "So you really don't recognize me... It's Sol! The deer!!"}; 
+        "SOL: So you really don't recognize me... It's Sol! The deer!!"}; 
 
     static String[] response3 = {
         "Don't worry, [USER NAME]! Let's get back to the story, shall we?",  "", "", "", "", 
         "Honestly, dear [USER NAME] , we've already established she's an adventurous soul! Why would you believe she would do something as mature as this?", "", 
-        "I'm Sol!!"}; 
+        "SOL: I'm Sol!!"}; 
 
     static String[] musicInOrder = {
         "home.wav",
@@ -425,7 +425,7 @@ public class Main implements ActionListener{
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~OBJECTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         //Creating an instance of this class (Display) in the method -> apparently it's so the program can access non-static variables too
-        Main display = new Main(); 
+        Display display = new Display(); 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
         start.addActionListener(display);
@@ -463,6 +463,7 @@ public class Main implements ActionListener{
             howToPlay.setVisible(false);
             homeScreenBG.setVisible(false); 
 
+            background.setIcon(backgroundIMGs[sceneNum]); 
             GameScreen.setContentPane(background);
 
             String line = TextReader.readAndDelete("Script.txt"); 
@@ -570,13 +571,14 @@ public class Main implements ActionListener{
             String response = "";
             
             if (e.getSource() == Option1) {
-                response = response1[sceneNum];
+                response = response1[sceneNum]; 
             } else if (e.getSource() == Option2) {
                 response = response2[sceneNum];
             } else if (e.getSource() == Option3) {
                 response = response3[sceneNum];
             }
-
+            
+            updateCharacterSprite(response); 
             response = replaceUserName(response);
             
             Option1.setVisible(false);
